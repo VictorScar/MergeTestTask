@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3162460882042561666}
+  - component: {fileID: 3392403255511986773}
   - component: {fileID: 4858951139102211460}
+  - component: {fileID: 7749085559241886990}
   m_Layer: 0
   m_Name: field_row (5)
   m_TagString: Untagged
@@ -36,6 +38,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3392403255511986773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4982861568985480849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3d9ce5f259f464aaf1aab342fba108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect: {fileID: 3162460882042561666}
+  cg: {fileID: 7749085559241886990}
+  showInAnimator: {fileID: 0}
+  hideInAnimator: {fileID: 0}
+  root: {fileID: 3162460882042561666}
+  cellPrefab: {fileID: 2664422562745479732, guid: 2a8fbbc57eaade844be024a32959726f, type: 3}
 --- !u!114 &4858951139102211460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,3 +82,15 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &7749085559241886990
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4982861568985480849}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
