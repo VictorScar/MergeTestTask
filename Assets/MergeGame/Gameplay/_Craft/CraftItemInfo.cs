@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace MergeGame.Gameplay._Craft
 {
+    [Serializable]
     public struct CraftItemInfo
     {
         [SerializeField] private int itemLevel;

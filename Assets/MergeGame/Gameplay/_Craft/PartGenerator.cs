@@ -10,13 +10,14 @@ public class PartGenerator : FieldElement
     private CraftField _field;
 
 
-    public PartGenerator(CraftItemInfo info, ItemGroupID groupID,  int level = 0) : base(groupID, level)
-    {
-        _partInfo = info;
-    }
 
     public void GenerateItem()
     {
         var part = new CraftPart(_partInfo.GroupID, _partInfo.Level);
+    }
+
+    public PartGenerator(CraftItemInfo info, FieldElementData data) : base(data)
+    {
+        _partInfo = info;
     }
 }

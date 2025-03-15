@@ -7,7 +7,7 @@ namespace MergeGame.Gameplay._Craft
     {
         [SerializeField] private CraftItemInfo[] infos;
 
-        public bool GetItemInfo(ItemGroupID groupID, int itemLevel, CraftItemInfo itemInfo)
+        public bool GetItemInfo(ItemGroupID groupID, int itemLevel, out CraftItemInfo itemInfo)
         {
             if (infos != null)
             {

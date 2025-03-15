@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MergeGame.Gameplay;
 using MergeGame.Gameplay._Craft;
 using UnityEngine;
 
@@ -8,11 +9,19 @@ public class FieldElement
     protected ItemGroupID _groupID;
     protected int _level;
 
-    public FieldElement(ItemGroupID groupID, int level = 0)
+    public FieldElement(FieldElementData data)
     {
-        _groupID = groupID;
-        _level = level;
+        _groupID = data.GroupID;
+        _level = data.Level;
     }
 
+    public void Activate()
+    {
+        OnActivated();
+    }
 
+    protected virtual void OnActivated()
+    {
+       
+    }
 }

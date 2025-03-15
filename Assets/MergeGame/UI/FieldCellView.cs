@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MergeGame.UI
 {
-    public class FieldCellView : UIView
+    public class FieldCellView : UIClickableView
     {
         [SerializeField] private Image content;
 

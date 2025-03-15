@@ -18,7 +18,7 @@ namespace MergeGame.UI
             _cells.Add(cell);
         }
 
-        public bool GetCell(int index, FieldCellView cellView)
+        public bool GetCell(int index, out FieldCellView cellView)
         {
             if (index >= 0 && index < _cells.Count)
             {

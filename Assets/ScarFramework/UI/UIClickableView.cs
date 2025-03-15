@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace ScarFramework.UI
@@ -10,6 +11,7 @@ namespace ScarFramework.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             onClick?.Invoke(this);
+            Debug.Log("Click");
         }
     }
 }

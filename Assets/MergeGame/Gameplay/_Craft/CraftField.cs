@@ -1,4 +1,5 @@
 using MergeGame.Gameplay._Craft;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MergeGame.Gameplay
@@ -6,6 +7,7 @@ namespace MergeGame.Gameplay
     public class CraftField
     {
         private FieldCell[,] _cells;
+      
 
         public void GenerateCraftField(CraftFieldData data)
         {
@@ -20,15 +22,16 @@ namespace MergeGame.Gameplay
             }
         }
 
-        public bool AddElementToCell(int x, int y, FieldElement element)
+        public bool AddElementToCell(int x, int y, FieldElementData elementData)
         {
-            if (ValidateCell(y, x))
+            if (ValidateCell(x, y))
             {
                 var cell = _cells[x, y];
                 
                 if (!cell.HasElement)
                 {
-                    cell.FieldElement = element;
+                    cell.FieldElement = new FieldElement(elementData);
+                    return true;
                 }
             }
 
@@ -47,6 +50,16 @@ namespace MergeGame.Gameplay
         public int FieldHeight;
         public CraftItemInfo Info;
     }
-    
-    //ipublic struct 
+
+    public struct FieldElementData
+    {
+        public ItemGroupID GroupID;
+        public int Level;
+        
+        public FieldElementData(ItemGroupID groupID, int level)
+        {
+            GroupID = groupID;
+            Level = level;
+        }
+    }
 }

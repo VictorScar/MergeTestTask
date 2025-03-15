@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MergeGame.Core;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -11,6 +12,7 @@ public class Game : MonoBehaviour
     public void Init()
     {
         serviceLocator.Init();
+        levelScenario.Init(config);
         levelScenario.Run();
     }
 }
