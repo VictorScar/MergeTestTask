@@ -72,8 +72,18 @@ namespace ScarFramework.UI
         {
             if (!immediately)
             {
-                gameObject.SetActive(true);
-                showInAnimator?.PlayAnimation().OnKill(OnShow);
+              //  gameObject.SetActive(true);
+
+                if (showInAnimator)
+                {
+                    showInAnimator.PlayAnimation().OnKill(OnShow);
+                }
+                else
+                {
+                    gameObject.SetActive(true);
+                    OnShow();
+                }
+               
 
             }
             else
@@ -88,7 +98,15 @@ namespace ScarFramework.UI
         {
             if (!immediately)
             {
-                hideInAnimator?.PlayAnimation().OnKill(OnHide);
+                if (hideInAnimator)
+                {
+                    hideInAnimator.PlayAnimation().OnKill(OnHide);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                    OnHide();
+                }
                 
             }
             else
