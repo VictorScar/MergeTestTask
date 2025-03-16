@@ -13,17 +13,7 @@ namespace MergeGame.UI
         private List<CellViewRow> _rows = new List<CellViewRow>();
 
 
-        public void RedrawField()
-        {
-        
-        }
-
-        public void Clear()
-        {
-        
-        }
-
-        public void DrawField(CraftFieldData data)
+        /*public void DrawField(CraftFieldData data)
         {
             for (int i = 0; i < data.FieldHeight; i++)
             {
@@ -36,8 +26,24 @@ namespace MergeGame.UI
                 
                 _rows.Add(row);
             }
+        }*/
+
+        private void AddCellsRow()
+        {
+            var row = Instantiate(cellRowPrefab, root);
+            _rows.Add(row);
         }
 
+        public void AddCellView(int rowNumber, int cellIndex)
+        {
+            if (_rows.Count <= rowNumber)
+            {
+                AddCellsRow();
+            }
+            
+            _rows[rowNumber].AddCell();
+        }
+        
         public bool GetCell(int celX, int celY, out FieldCellView cell)
         {
             if (celY >= 0 && celY < _rows.Count)
@@ -54,5 +60,7 @@ namespace MergeGame.UI
             cell = null;
             return false;
         }
+
+ 
     }
 }

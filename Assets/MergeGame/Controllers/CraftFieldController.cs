@@ -10,7 +10,7 @@ using UnityEngine;
 public class CraftFieldController : MonoBehaviour
 {
     [SerializeField] private ItemGroupID groupID;
-    
+
     private CraftField _field;
     private CraftFieldPanel _fieldView;
     private GameConfig _config;
@@ -21,17 +21,23 @@ public class CraftFieldController : MonoBehaviour
         _fieldView = GameServiceLocator.I.UI.GetScreen<GameScreen>().FieldPanel;
     }
 
-    public void CreateField()
+    public void CreateField(CraftFieldData data)
     {
         _field = new CraftField();
-        
-        var data = new CraftFieldData();
-        data.FieldWidth = _config.FieldWidth; 
-        data.FieldHeight = _config.FieldHeight;
-        data.Info = new CraftItemInfo();
-        
-        _field.GenerateCraftField(data);
-        _fieldView.DrawField(data);
+
+        for (int i = 0; i < data.FieldHeight; i++)
+        {
+            for (int j = 0; j < data.FieldWidth; j++)
+            {
+                AddCell(i, j);
+            }
+        }
+    }
+
+    private void AddCell(int rowIndex, int cellIndex)
+    {
+        _field.AddCell(rowIndex, cellIndex);
+        _fieldView.AddCellView(rowIndex, cellIndex);
     }
 
     [Button("Spawn Item")]
@@ -41,17 +47,35 @@ public class CraftFieldController : MonoBehaviour
         var celY = Random.Range(0, _config.FieldHeight);
 
         var elementData = new FieldElementData(groupID, 0);
-        
+
         if (_field.AddElementToCell(celX, celY, elementData))
         {
             if (_fieldView.GetCell(celX, celY, out var cellView))
             {
-                if (_config.ItemsConfig.GetItemInfo(elementData.GroupID, elementData.Level, out var itemInfo))
+                if (_config.ItemsConfig.GetItemInfo(elementData.GroupID, elementData.Level, out var itemData))
                 {
-                    cellView.SetData(itemInfo.Icon);
+                    cellView.SetData(itemData.Icon);
                 }
-              
             }
+        }
+    }
+
+    public struct CraftFieldData
+    {
+        public int FieldWidth;
+        public int FieldHeight;
+        public CraftItemInfo Info;
+    }
+
+    public class CellHandler
+    {
+        private FieldCell _cell;
+        private FieldCellView _cellView;
+
+        public CellHandler(FieldCell cell, FieldCellView cellView)
+        {
+            _cell = cell;
+            _cellView = cellView;
         }
     }
 }

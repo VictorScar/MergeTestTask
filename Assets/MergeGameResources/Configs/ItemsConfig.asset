@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f44dc4bd56b08447a1a3db15c352222, type: 3}
   m_Name: ItemsConfig
   m_EditorClassIdentifier: 
-  infos:
-  - itemLevel: 0
-    itemName: Ingot
-    icon: {fileID: 21300000, guid: 4f9e5ffde0729f64a897525c81586fd0, type: 3}
-    itemGroupID: 1
-  - itemLevel: 1
-    itemName: Rolled steel
-    icon: {fileID: 21300000, guid: 526fabc046832a943a80618fc5be8771, type: 3}
-    itemGroupID: 1
+  itemGroups:
+  - groupID: 1
+    itemInfos:
+    - itemName: steel ingot
+      icon: {fileID: 21300000, guid: 4f9e5ffde0729f64a897525c81586fd0, type: 3}
+    - itemName: Rolled steel
+      icon: {fileID: 21300000, guid: 526fabc046832a943a80618fc5be8771, type: 3}
+  - groupID: 2
+    itemInfos:
+    - itemName: Cuprum ingot
+      icon: {fileID: 21300000, guid: 6e63ea77f8c5b334d959667031227c56, type: 3}
+  - groupID: 3
+    itemInfos:
+    - itemName: steel sheet
+      icon: {fileID: 21300000, guid: 2a22973b892a03842937c492e3d23c4c, type: 3}

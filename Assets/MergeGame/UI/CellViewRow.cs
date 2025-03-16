@@ -11,11 +11,22 @@ namespace MergeGame.UI
 
         private List<FieldCellView> _cells = new List<FieldCellView>();
     
-        public void AddElement()
+        public void AddCell()
         {
             var cell = Instantiate(cellPrefab, root);
             
             _cells.Add(cell);
+        }
+
+        public void RemoveCell(int cellIndex)
+        {
+            if (cellIndex >= 0 && cellIndex < _cells.Count)
+            {
+                var cell = _cells[cellIndex];
+                _cells.Remove(cell);
+                Destroy(cell);
+            }
+            
         }
 
         public bool GetCell(int index, out FieldCellView cellView)
