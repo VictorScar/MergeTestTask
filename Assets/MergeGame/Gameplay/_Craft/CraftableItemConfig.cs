@@ -19,16 +19,21 @@ namespace MergeGame.Gameplay._Craft
                         if (itemLevel >= 0 && itemLevel < group.Infos.Length)
                         {
                             var info = group.Infos[itemLevel];
-                            itemData = new CraftableItemData{GroupID = groupID, Level = itemLevel, Icon = info.Icon, Name = info.Name};
+                            itemData = new CraftableItemData
+                                { GroupID = groupID, Level = itemLevel, Icon = info.Icon, Name = info.Name };
                             return true;
                         }
-                       
                     }
                 }
             }
 
             itemData = new CraftableItemData();
             return false;
+        }
+
+        public bool GetItemInfo(FieldElementData elementData, out CraftableItemData itemData)
+        {
+            return GetItemInfo(elementData.GroupID, elementData.Level, out itemData);
         }
     }
 
@@ -41,23 +46,21 @@ namespace MergeGame.Gameplay._Craft
         public ItemGroupID GroupID => groupID;
         public CraftItemInfo[] Infos => itemInfos;
     }
-    
+
     public struct CraftableItemData
     {
         public int Level;
         public string Name;
         public Sprite Icon;
         public ItemGroupID GroupID;
-   
     }
-    
+
     public enum ItemGroupID
     {
         None,
         Mechanical,
         Electrical,
         BodyParts,
-        Packaging,
-        Lighting
+        Produce
     }
 }

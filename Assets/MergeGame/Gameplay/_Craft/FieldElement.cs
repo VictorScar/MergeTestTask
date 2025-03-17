@@ -6,22 +6,12 @@ using UnityEngine;
 
 public class FieldElement
 {
-    protected ItemGroupID _groupID;
-    protected int _level;
+    private FieldElementData _data;
 
+    public FieldElementData Data => _data;
+    
     public FieldElement(FieldElementData data)
     {
-        _groupID = data.GroupID;
-        _level = data.Level;
-    }
-
-    public void Activate()
-    {
-        OnActivated();
-    }
-
-    protected virtual void OnActivated()
-    {
-       
+        _data = data;
     }
 }

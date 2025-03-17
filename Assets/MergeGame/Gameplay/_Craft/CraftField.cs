@@ -7,11 +7,9 @@ namespace MergeGame.Gameplay
 {
     public class CraftField
     {
-        //private FieldCell[,] _cells;
         private List<FieldElementsRow> _rows = new List<FieldElementsRow>();
 
-
-        public void AddCell(int rowIndex, int cellIndex)
+        public FieldCell AddCell(int rowIndex, int cellIndex)
         {
             if (rowIndex >= 0)
             {
@@ -21,8 +19,13 @@ namespace MergeGame.Gameplay
                     _rows.Add(row);
                 }
 
-                _rows[rowIndex].Elements.Add(new FieldCell());
+                var cell = new FieldCell();
+                _rows[rowIndex].Elements.Add(cell);
+
+                return cell;
             }
+
+            return null;
         }
 
         public void RemoveCell(int rowIndex, int cellIndex)
@@ -101,6 +104,16 @@ namespace MergeGame.Gameplay
         {
             GroupID = groupID;
             Level = level;
+        }
+
+        public static bool operator ==(FieldElementData dataA, FieldElementData dataB)
+        {
+            return dataA.GroupID == dataB.GroupID && dataA.Level == dataB.Level;
+        }
+        
+        public static bool operator !=(FieldElementData dataA, FieldElementData dataB)
+        {
+            return dataA.GroupID != dataB.GroupID || dataA.Level != dataB.Level;
         }
     }
 }

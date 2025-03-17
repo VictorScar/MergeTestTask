@@ -15,21 +15,19 @@ public class GameLevelScenario : MonoBehaviour
         _config = config;
         fieldController.Init(config);
     }
-    
+
     public void Run()
     {
         _gameScreen = GameServiceLocator.I.UI.GetScreen<GameScreen>();
         _fieldPanel = _gameScreen.FieldPanel;
-        
+
         var data = new CraftFieldController.CraftFieldData();
-       data.FieldWidth = _config.FieldWidth;
-       data.FieldHeight = _config.FieldHeight;
-       data.Info = new CraftItemInfo();
-        
+        data.FieldWidth = _config.FieldWidth;
+        data.FieldHeight = _config.FieldHeight;
+
+
         fieldController.CreateField(data);
-        
-        //_gameScreen.Show();
+
+        _gameScreen.Show();
     }
-
-
 }

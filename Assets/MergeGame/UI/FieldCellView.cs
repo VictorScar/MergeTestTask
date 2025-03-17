@@ -1,23 +1,66 @@
+using System;
+using MergeGame.UI._ItemView;
 using ScarFramework.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace MergeGame.UI
 {
-    public class FieldCellView : UIClickableView
+    public class FieldCellView : UIView
     {
-        [SerializeField] private Image content;
+        //[SerializeField] private RectTransform content;
+        [SerializeField] private Image highlight;
+        [SerializeField]private ItemView itemView;
+        
+        public event Action onStartDrag;
+        public event Action onEndDrag;
+        public event Action onClick;
 
-        public void SetData(Sprite icon)
+        public ItemView Item => itemView;
+
+        public void Init()
         {
-            content.sprite = icon;
-            content.gameObject.SetActive(icon!= null);
+            itemView.onClick += OnClick;
+            itemView.onStartDrag += OnDrag;
+            itemView.onEndDrag += OnEndDrag;
         }
 
-        public void Clear()
+        private void OnDestroy()
         {
-            content.sprite = null;
-            content.gameObject.SetActive(false);
+            itemView.onClick -= OnClick;
+            itemView.onStartDrag -= OnDrag;
+            itemView.onEndDrag -= OnEndDrag;
+        }
+
+        public void AddItem(Sprite itemIcon)
+        {
+            itemView.Data = new ItemViewData { Icon = itemIcon };
+        }
+
+        public void RemoveItem()
+        {
+            itemView.Data = new ItemViewData { Icon = null };
+        }
+
+        public void HighlightCell(bool isHighlighting)
+        {
+            highlight.gameObject.SetActive(isHighlighting);
+        }
+
+        private void OnDrag()
+        {
+            onStartDrag?.Invoke();
+        }
+
+        private void OnEndDrag()
+        {
+            onEndDrag?.Invoke();
+        }
+
+        private void OnClick()
+        {
+            onClick?.Invoke();
         }
     }
 }

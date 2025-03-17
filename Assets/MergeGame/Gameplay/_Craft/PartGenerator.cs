@@ -6,18 +6,16 @@ using UnityEngine;
 
 public class PartGenerator : FieldElement
 {
-    private CraftableItemData _partInfo;
+    private FieldElementData _partInfo;
     private CraftField _field;
-
-
 
     public void GenerateItem()
     {
-        var part = new CraftPart(_partInfo.GroupID, _partInfo.Level);
+        var part = new CraftPart(_partInfo);
     }
 
-    public PartGenerator(CraftableItemData info, FieldElementData data) : base(data)
+    public PartGenerator(FieldElementData craftableItemData, FieldElementData data) : base(data)
     {
-        _partInfo = info;
+        _partInfo = craftableItemData;
     }
 }

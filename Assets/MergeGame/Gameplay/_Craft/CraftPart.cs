@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using MergeGame.Gameplay;
 using MergeGame.Gameplay._Craft;
 using UnityEngine;
 
-public class CraftPart
+public class CraftPart: FieldElement
 {
-    private ItemGroupID _groupID;
-    private int _level;
-    
-    public CraftPart(ItemGroupID partInfoGroupID, int partInfoLevel)
+    public CraftPart(FieldElementData data) : base(data)
     {
-      
+        
     }
 }

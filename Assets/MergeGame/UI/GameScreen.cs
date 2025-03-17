@@ -7,6 +7,9 @@ using UnityEngine;
 public class GameScreen : UIScreen
 {
     [SerializeField] CraftFieldPanel crafetField;
-
+    [SerializeField] private DragView dragView;
+   
     public CraftFieldPanel FieldPanel => crafetField;
+    public DragView DragView => dragView;
+    
 }
