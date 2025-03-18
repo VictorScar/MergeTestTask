@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MergeGame.Gameplay._Craft;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace MergeGame.Gameplay
 {
@@ -169,6 +170,25 @@ namespace MergeGame.Gameplay
         {
             return rowIndex > -1 && rowIndex < _rows.Count && cellIndex > -1 &&
                    cellIndex < _rows[rowIndex].Elements.Count;
+        }
+
+        public void Clear()
+        {
+            foreach (var row in _rows)
+            {
+                foreach (var cell in row.Elements)
+                {
+                    cell.Clear();
+                }
+            }
+        }
+
+        public bool AddItemIntoRandomCell(FieldElement element)
+        {
+            var rowIndex = Random.Range(0, _rows.Count);
+            var cellIndex = Random.Range(0, _rows[rowIndex].Elements.Count);
+
+            return AddElementToNearestEmptyCell(rowIndex, cellIndex, element);
         }
     }
 

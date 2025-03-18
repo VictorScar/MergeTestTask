@@ -29,6 +29,7 @@ public class GameLevelScenario : MonoBehaviour
 
         fieldController.CreateField(data);
 
+        fieldController.GenerateLevelField(_config.FieldData);
         _gameScreen.Show();
     }
 }

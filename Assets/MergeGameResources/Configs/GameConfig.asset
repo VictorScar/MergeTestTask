@@ -16,3 +16,13 @@ MonoBehaviour:
   craftFieldWidth: 9
   craftFieldHeight: 5
   mergeDuration: 2
+  fieldData:
+    tasks: []
+    generatorsIDs: 00000000
+    startItemsInfos:
+    - GroupID: 1
+      Level: 0
+      ItemCount: 5
+    - GroupID: 1
+      Level: 1
+      ItemCount: 2

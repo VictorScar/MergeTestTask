@@ -1,15 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MergeGame.Gameplay._Craft;
 using UnityEngine;
 
 [Serializable]
 public struct LevelData
 {
-    [SerializeField] private int widthGameField;
-    [SerializeField] private int heightGameField;
     [SerializeField] private LevelTask[] tasks;
+    [SerializeField] private int[] generatorsIDs;
+    [SerializeField] private StartItemsInfo[] startItemsInfos;
+    
+   public int[] GeneratorsIDs => generatorsIDs;
+    public StartItemsInfo[] StartItemsInfos => startItemsInfos;
+}
 
-    public int WidthGameField => widthGameField;
-    public int HeightGameField => heightGameField;
+[Serializable]
+public struct StartItemsInfo
+{
+    public ItemGroupID GroupID;
+    public int Level;
+    public int ItemCount;
 }

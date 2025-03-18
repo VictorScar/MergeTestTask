@@ -48,6 +48,32 @@ namespace MergeGame.Controllers
                 }
             }
         }
+        
+        public void GenerateLevelField(LevelData data)
+        {
+            _field.Clear();
+
+            if (data.GeneratorsIDs != null)
+            {
+                foreach (var generatorID in data.GeneratorsIDs)
+                {
+                    createElementsController.AddProduceElement(generatorID);
+                }
+            }
+
+            if (data.StartItemsInfos != null)
+            {
+                foreach (var itemInfo in data.StartItemsInfos)
+                {
+                    for (int i = 0; i < itemInfo.ItemCount; i++)
+                    {
+                        createElementsController.AddCraftPartToRandomEmtyCell(itemInfo.GroupID, itemInfo.Level);
+                    }
+                   
+                }
+            }
+
+        }
 
         private void AddCell(int rowIndex, int cellIndex)
         {
@@ -81,8 +107,7 @@ namespace MergeGame.Controllers
         {
             public int FieldWidth;
             public int FieldHeight;
-            public FieldElementData[] ProduceBlocksDatas;
-            public FieldElementData[] StartElementsDatas;
+           
         }
 
         public CellHandler GetItemHandler(FieldCellView cellView)
@@ -96,5 +121,7 @@ namespace MergeGame.Controllers
             var handler = _cellHandlers.FirstOrDefault((h) => h.Cell == cell);
             return handler;
         }
+
+     
     }
 }

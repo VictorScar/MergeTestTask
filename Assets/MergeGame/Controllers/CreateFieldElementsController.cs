@@ -20,20 +20,28 @@ namespace MergeGame.Controllers
             if (_config.GetItemGeneratorData(generatorID, out var generatorData))
             {
                 var elementData = generatorData.ElementInfo;
-                _field.AddToEmptyCell(new PartGenerator(generatorData.GenerateItemData, elementData));
+                _field.AddItemIntoRandomCell(new PartGenerator(generatorData.GenerateItemData, elementData));
             }
         }
 
 
         public void AddCraftPartToEmtyCell(ItemGroupID groupID, int itemlevel)
         {
-            
             if (_config.GetItemInfo(groupID, itemlevel, out var itemData))
             {
                 var elementData = new FieldElementData(itemData.GroupID, itemData.Level, itemData.IsCanMerge);
                 _field.AddToEmptyCell(new CraftPart(elementData));
             }
           
+        }
+
+        public void AddCraftPartToRandomEmtyCell(ItemGroupID groupID, int itemlevel)
+        {
+            if (_config.GetItemInfo(groupID, itemlevel, out var itemData))
+            {
+                var elementData = new FieldElementData(itemData.GroupID, itemData.Level, itemData.IsCanMerge);
+                _field.AddItemIntoRandomCell(new CraftPart(elementData));
+            }
         }
 
         public void AddCraftPartNearCell(ItemGroupID groupID, int itemlevel, Vector2Int address)
