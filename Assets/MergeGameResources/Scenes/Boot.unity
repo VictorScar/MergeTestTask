@@ -334,6 +334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupID: 1
   dragPartController: {fileID: 1019273971}
+  cellY: 0
+  cellX: 0
 --- !u!4 &1029393121
 Transform:
   m_ObjectHideFlags: 0
