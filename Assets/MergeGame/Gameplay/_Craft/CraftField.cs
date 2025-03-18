@@ -43,6 +43,28 @@ namespace MergeGame.Gameplay
             }
         }
 
+        public bool AddToEmptyCell(FieldElementData elementData)
+        {
+            if (_rows != null)
+            {
+                for (int i = 0; i < _rows.Count(); i++)
+                {
+                    for (int j = 0; j < _rows[i].Elements.Count; j++)
+                    {
+                        var cell = GetCell(i, j);
+
+                        if (!cell.HasElement)
+                        {
+                            cell.FieldElement = new FieldElement(elementData);
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public bool AddElementToNearestEmptyCell(int rowIndex, int cellIndex, FieldElementData elementData)
         {
             if (FindNearestEmptyCell(rowIndex, cellIndex, out var nearestCell))
@@ -52,7 +74,7 @@ namespace MergeGame.Gameplay
 
             return false;
         }
-        
+
 
         public bool AddElementToCell(int rowIndex, int cellIndex, FieldElementData elementData)
         {
@@ -63,10 +85,10 @@ namespace MergeGame.Gameplay
 
             return false;
         }
-        
+
         public bool AddElementToCell(FieldCell cell, FieldElementData elementData)
         {
-            if (cell!=null)
+            if (cell != null)
             {
                 if (!cell.HasElement)
                 {
@@ -80,55 +102,36 @@ namespace MergeGame.Gameplay
 
         public bool FindNearestEmptyCell(int rowIndex, int cellIndex, out FieldCell nearestEmptyCell)
         {
-            /*var hasNotEmptyCell = false;
-            var i = 1;
-            var forward = new Vector2(0, 1);
-            var backward = new Vector2(0, -1);
-            var top = new Vector2(1, 0);
-            var down = new Vector2(-1, 0);
-            var topForward = new Vector2(1, 1);
-            var downForward = new Vector2(-1, 1);
-            var topBackward = new Vector2(1, -1);
-            var downBackward = new Vector2(-1, -1);
-            
-            while (!hasNotEmptyCell)
-            {
-                hasNotEmptyCell = true;
-                
-                TryGetCell
-            }*/
-            List<Vector2Int> emptyCellsIndexes = new List<Vector2Int>();
+            var targetPosition = new Vector2Int(rowIndex, cellIndex);
+            nearestEmptyCell = null;
+            var nearestSqrDistance = 100f;
+            var isFound = false;
 
             for (int i = 0; i < _rows.Count; i++)
             {
-                for (int j = 0; j < _rows[0].Elements.Count; j++)
+                for (int j = 0; j < _rows[i].Elements.Count(); j++)
                 {
-                    var cell = GetCell(i, j);
-
-                    if (!cell.HasElement)
+                    if (TryGetCell(i, j, out var cell))
                     {
-                        emptyCellsIndexes.Add(new Vector2Int(i, j));
+                        if (!cell.HasElement)
+                        {
+                            var newIndex = new Vector2Int(i, j);
+
+                            var currentSqrDistance = Mathf.Abs((targetPosition - newIndex).sqrMagnitude);
+
+                            if (currentSqrDistance < nearestSqrDistance)
+                            {
+                                nearestSqrDistance = currentSqrDistance;
+                                nearestEmptyCell = cell;
+                                isFound = true;
+                            }
+                        }
                     }
                 }
             }
 
-            if (emptyCellsIndexes.Count > 0)
-            {
-                var sortedCellIndexes = emptyCellsIndexes.OrderByDescending((index) =>
-                    new Vector2(Mathf.Abs(index.y - rowIndex),
-                        Mathf.Abs((index.x - cellIndex)))).ToArray();
-
-                var nearestCellAdress = sortedCellIndexes[0];
-
-                nearestEmptyCell = GetCell(nearestCellAdress.y, nearestCellAdress.x);
-                return true;
-            }
-            else
-            {
-                nearestEmptyCell = null;
-                return false;
-            }
-            
+            return isFound;
+          
         }
 
         public bool RemoveElementFromCell(int rowIndex, int cellIndex)

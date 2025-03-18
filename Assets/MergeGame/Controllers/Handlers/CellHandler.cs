@@ -11,18 +11,16 @@ namespace MergeGame.Controllers.Handlers
         private FieldCell _cell;
         private FieldCellView _cellView;
         private DragPartController _dragController;
-       // private Vector2 _address;
 
         public FieldCell Cell => _cell;
         public FieldCellView View => _cellView;
-       // public Vector2 Addres => _address;
         private CraftableItemConfig _config;
 
-        public CellHandler(FieldCell cell, FieldCellView cellView, CraftableItemConfig config, DragPartController dragController)
+        public CellHandler(FieldCell cell, FieldCellView cellView, CraftableItemConfig config,
+            DragPartController dragController)
         {
             _cell = cell;
             _cellView = cellView;
-            //_address = address;
             _config = config;
             _dragController = dragController;
 
@@ -41,38 +39,7 @@ namespace MergeGame.Controllers.Handlers
             _cell.onItemAdded -= OnItemAdded;
             _cell.onItemRemoved -= OnItemRemoved;
         }
-
-
-        /*
-        public bool AddItem(CraftableItemData itemData)
-        {
-            if (!_cell.HasElement)
-            {
-                _cell.FieldElement = new CraftPart(new FieldElementData
-                    { GroupID = itemData.GroupID, Level = itemData.Level });
-
-                _cellView.AddItem(itemData.Icon);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool RemoveItem()
-        {
-            if (_cell.HasElement)
-            {
-                _cell.FieldElement = null;
-
-                _cellView.AddItem(null);
-
-                return true;
-            }
-
-            return false;
-        }
-        */
+ 
 
         private void OnItemAdded(FieldElement item)
         {

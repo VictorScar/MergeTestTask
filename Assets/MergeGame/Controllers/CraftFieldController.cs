@@ -14,6 +14,8 @@ public class CraftFieldController : MonoBehaviour
 {
     [SerializeField] private ItemGroupID groupID;
     [SerializeField] private DragPartController dragPartController;
+    [SerializeField] private int cellY;
+    [SerializeField] private int cellX;
 
     private CraftField _field;
     private CraftFieldPanel _fieldView;
@@ -57,22 +59,19 @@ public class CraftFieldController : MonoBehaviour
     [Button("Spawn Item")]
     public void SpawnItem()
     {
-        var celX = Random.Range(0, _config.FieldWidth);
-        var celY = Random.Range(0, _config.FieldHeight);
-
+        var elementData = new FieldElementData(groupID, 0);
+        _field.AddToEmptyCell(elementData);
+    }
+    
+    [Button("Spawn in cell Item")]
+    public void SpawnInCellItem()
+    {
+        
         var elementData = new FieldElementData(groupID, 0);
 
-        //var handler = _cellHandlers.Find((h) => h.Addres == new Vector2(celY, celX));
-
-        /*if (_config.ItemsConfig.GetItemInfo(elementData, out var itemData))
-        {
-            //handler.AddItem(itemData);
-            _field.AddElementToCell(celY, celX, elementData);
-        }*/
-
-        //_field.AddElementToNearestEmptyCell(celY, celX, elementData);
-        _field.AddElementToCell(celY, celX, elementData);
-
+      
+        _field.AddElementToNearestEmptyCell(cellY, cellX, elementData);
+        
     }
 
     public struct CraftFieldData
