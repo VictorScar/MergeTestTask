@@ -8,92 +8,94 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragPartController : MonoBehaviour
+namespace MergeGame.Controllers
 {
-    private DragView _dragView;
-    private CraftableItemConfig _config;
-    private Coroutine _dragging;
-    private GraphicRaycaster _graphicRaycaster;
-    private EventSystem _eventSystem;
-    private CraftFieldController _fieldController;
-
-    public void Init(DragView dragView, CraftableItemConfig config, Canvas canvas, CraftFieldController fieldController)
+    public class DragPartController : MonoBehaviour
     {
-        _dragView = dragView;
-        _config = config;
-        _fieldController = fieldController;
-        _graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
-    }
+        private DragView _dragView;
+        private CraftableItemConfig _config;
+        private Coroutine _dragging;
+        private GraphicRaycaster _graphicRaycaster;
+        private EventSystem _eventSystem;
+        private CraftFieldController _fieldController;
 
-    public void StartDrag(CellHandler cellHandler)
-    {
-        _dragView.SetItemView(cellHandler.View.Item.Icon);
-        _dragging = StartCoroutine(Dragging());
-    }
-
-    public void EndDrag(CellHandler cellHandler)
-    {
-        var raycastResults = new List<RaycastResult>();
-        var pointerEventData = new PointerEventData(_eventSystem);
-        pointerEventData.position = Input.mousePosition;
-
-        _graphicRaycaster.Raycast(pointerEventData, raycastResults);
-
-        foreach (var result in raycastResults)
+        public void Init(DragView dragView, CraftableItemConfig config, Canvas canvas, CraftFieldController fieldController)
         {
-            if (result.gameObject.TryGetComponent<FieldCellView>(out var targetCell))
+            _dragView = dragView;
+            _config = config;
+            _fieldController = fieldController;
+            _graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
+        }
+
+        public void StartDrag(CellHandler cellHandler)
+        {
+            _dragView.SetItemView(cellHandler.View.Item.Icon);
+            _dragging = StartCoroutine(Dragging());
+        }
+
+        public void EndDrag(CellHandler cellHandler)
+        {
+            var raycastResults = new List<RaycastResult>();
+            var pointerEventData = new PointerEventData(_eventSystem);
+            pointerEventData.position = Input.mousePosition;
+
+            _graphicRaycaster.Raycast(pointerEventData, raycastResults);
+
+            foreach (var result in raycastResults)
             {
-                TryPutElement(cellHandler, targetCell);
-                break;
+                if (result.gameObject.TryGetComponent<FieldCellView>(out var targetCell))
+                {
+                    TryPutElement(cellHandler, targetCell);
+                    break;
+                }
+            }
+
+            _dragView.SetItemView(null);
+
+            if (_dragging != null)
+            {
+                StopCoroutine(_dragging);
             }
         }
 
-        _dragView.SetItemView(null);
-
-        if (_dragging != null)
+        private void TryPutElement(CellHandler fromCellHandler, FieldCellView targetCellView)
         {
-            StopCoroutine(_dragging);
-        }
-    }
+            var targetCellHandler = _fieldController.GetItemHandler(targetCellView);
 
-    private void TryPutElement(CellHandler fromCellHandler, FieldCellView targetCellView)
-    {
-        var targetCellHandler = _fieldController.GetItemHandler(targetCellView);
-
-        if (fromCellHandler == targetCellHandler)
-        {
-            return;
-        }
-        
-        var fromCellItem = fromCellHandler.Cell.FieldElement;
-        var targetCellItem = targetCellHandler.Cell.FieldElement;
-
-        if (targetCellItem != null)
-        {
-            if (targetCellItem.Data == fromCellItem.Data && !_config.IsMaxItemLevel(targetCellItem.Data))
+            if (fromCellHandler == targetCellHandler)
             {
-                fromCellHandler.Cell.Clear();
-                targetCellHandler.Cell.FieldElement = new FieldElement(new FieldElementData
-                    { GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1 });
+                return;
+            }
+        
+            var fromCellItem = fromCellHandler.Cell.FieldElement;
+            var targetCellItem = targetCellHandler.Cell.FieldElement;
+
+            if (targetCellItem != null)
+            {
+                if (targetCellItem.Data == fromCellItem.Data && !_config.IsMaxItemLevel(targetCellItem.Data))
+                {
+                    fromCellHandler.Cell.Clear();
+                    targetCellHandler.Cell.FieldElement = new FieldElement(new FieldElementData
+                        { GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1 });
+                }
+                else
+                {
+                    fromCellHandler.Cell.FieldElement = targetCellItem;
+                    targetCellHandler.Cell.FieldElement = fromCellItem;
+                }
             }
             else
             {
-                fromCellHandler.Cell.FieldElement = targetCellItem;
-                targetCellHandler.Cell.FieldElement = fromCellItem;
+                targetCellHandler.Cell.FieldElement = fromCellHandler.Cell.FieldElement;
+                fromCellHandler.Cell.Clear();
             }
-        }
-        else
-        {
-            targetCellHandler.Cell.FieldElement = fromCellHandler.Cell.FieldElement;
-            fromCellHandler.Cell.Clear();
-        }
 
 
-        // var targetCell = targetCellHandler.Cell;
+            // var targetCell = targetCellHandler.Cell;
 
 
 
-        /*if (_config.GetItemInfo(fromCellHandler.Cell.FieldElement.Data, out var dragItemData))
+            /*if (_config.GetItemInfo(fromCellHandler.Cell.FieldElement.Data, out var dragItemData))
         {
             if (targetCell.FieldElement != null)
             {
@@ -127,15 +129,16 @@ public class DragPartController : MonoBehaviour
             }
         }*/
 
-    }
+        }
 
 
-    private IEnumerator Dragging()
-    {
-        while (true)
+        private IEnumerator Dragging()
         {
-            _dragView.Rect.position = Input.mousePosition;
-            yield return null;
+            while (true)
+            {
+                _dragView.Rect.position = Input.mousePosition;
+                yield return null;
+            }
         }
     }
 }
