@@ -43,7 +43,7 @@ namespace MergeGame.Gameplay
             }
         }
 
-        public bool AddToEmptyCell(FieldElementData elementData)
+        public bool AddToEmptyCell(FieldElement fieldElement)
         {
             if (_rows != null)
             {
@@ -55,7 +55,7 @@ namespace MergeGame.Gameplay
 
                         if (!cell.HasElement)
                         {
-                            cell.FieldElement = new FieldElement(elementData);
+                            cell.FieldElement = fieldElement;
                             return true;
                         }
                     }
@@ -65,34 +65,34 @@ namespace MergeGame.Gameplay
             return false;
         }
 
-        public bool AddElementToNearestEmptyCell(int rowIndex, int cellIndex, FieldElementData elementData)
+        public bool AddElementToNearestEmptyCell(int rowIndex, int cellIndex, FieldElement fieldElement)
         {
             if (FindNearestEmptyCell(rowIndex, cellIndex, out var nearestCell))
             {
-                return AddElementToCell(nearestCell, elementData);
+                return AddElementToCell(nearestCell, fieldElement);
             }
 
             return false;
         }
 
 
-        public bool AddElementToCell(int rowIndex, int cellIndex, FieldElementData elementData)
+        public bool AddElementToCell(int rowIndex, int cellIndex, FieldElement fieldElement)
         {
             if (TryGetCell(rowIndex, cellIndex, out var cell))
             {
-                AddElementToCell(cell, elementData);
+                AddElementToCell(cell, fieldElement);
             }
 
             return false;
         }
 
-        public bool AddElementToCell(FieldCell cell, FieldElementData elementData)
+        public bool AddElementToCell(FieldCell cell, FieldElement fieldElement)
         {
             if (cell != null)
             {
                 if (!cell.HasElement)
                 {
-                    cell.FieldElement = new FieldElement(elementData);
+                    cell.FieldElement = fieldElement;
                     return true;
                 }
             }
