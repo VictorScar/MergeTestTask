@@ -11,22 +11,26 @@ namespace MergeGame.Controllers.Handlers
         private FieldCell _cell;
         private FieldCellView _cellView;
         private DragPartController _dragController;
-        private Vector2 _address;
+       // private Vector2 _address;
 
         public FieldCell Cell => _cell;
         public FieldCellView View => _cellView;
-        public Vector2 Addres => _address;
+       // public Vector2 Addres => _address;
+        private CraftableItemConfig _config;
 
-        public CellHandler(FieldCell cell, FieldCellView cellView, Vector2 address, DragPartController dragController)
+        public CellHandler(FieldCell cell, FieldCellView cellView, CraftableItemConfig config, DragPartController dragController)
         {
             _cell = cell;
             _cellView = cellView;
-            _address = address;
+            //_address = address;
+            _config = config;
             _dragController = dragController;
 
             _cellView.onStartDrag += OnStartStartDragging;
             _cellView.onEndDrag += OnEndDragging;
             _cellView.onClick += OnClick;
+            _cell.onItemAdded += OnItemAdded;
+            _cell.onItemRemoved += OnItemRemoved;
         }
 
         public void Dispose()
@@ -34,8 +38,12 @@ namespace MergeGame.Controllers.Handlers
             _cellView.onStartDrag -= OnStartStartDragging;
             _cellView.onEndDrag -= OnEndDragging;
             _cellView.onClick -= OnClick;
+            _cell.onItemAdded -= OnItemAdded;
+            _cell.onItemRemoved -= OnItemRemoved;
         }
 
+
+        /*
         public bool AddItem(CraftableItemData itemData)
         {
             if (!_cell.HasElement)
@@ -64,7 +72,20 @@ namespace MergeGame.Controllers.Handlers
 
             return false;
         }
+        */
 
+        private void OnItemAdded(FieldElement item)
+        {
+            if (_config.GetItemInfo(item.Data, out var itemData))
+            {
+                _cellView.AddItem(itemData.Icon);
+            }
+        }
+
+        private void OnItemRemoved()
+        {
+            _cellView.AddItem(null);
+        }
 
         private void OnStartStartDragging()
         {
@@ -78,7 +99,6 @@ namespace MergeGame.Controllers.Handlers
 
         private void OnClick()
         {
-            
         }
     }
 }

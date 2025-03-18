@@ -8,7 +8,39 @@ namespace MergeGame.Gameplay._Craft
     {
         [SerializeField] private CraftableItemByGroupData[] itemGroups;
 
+        public bool GetItemInfo(FieldElementData elementData, out CraftableItemData itemData)
+        {
+            return GetItemInfo(elementData.GroupID, elementData.Level, out itemData);
+        }
+        
         public bool GetItemInfo(ItemGroupID groupID, int itemLevel, out CraftableItemData itemData)
+        {
+            if (GetItemGroup(groupID, out var itemGroup))
+            {
+                if (itemLevel>=0 && itemLevel < itemGroup.Infos.Length)
+                {
+                    var info = itemGroup.Infos[itemLevel];
+                    itemData = new CraftableItemData
+                        { GroupID = groupID, Level = itemLevel, Icon = info.Icon, Name = info.Name };
+                    return true;
+                }
+            }
+          
+            itemData = new CraftableItemData();
+            return false;
+        }
+    
+        public bool IsMaxItemLevel(FieldElementData elementData)
+        {
+            if (GetItemGroup(elementData.GroupID, out var itemGroup))
+            {
+                return elementData.Level >= itemGroup.Infos.Length-1;
+            }
+            
+            return true;
+        }
+
+        private bool GetItemGroup(ItemGroupID groupID, out CraftableItemByGroupData itemGroup)
         {
             if (itemGroups != null)
             {
@@ -16,24 +48,15 @@ namespace MergeGame.Gameplay._Craft
                 {
                     if (group.GroupID == groupID)
                     {
-                        if (itemLevel >= 0 && itemLevel < group.Infos.Length)
-                        {
-                            var info = group.Infos[itemLevel];
-                            itemData = new CraftableItemData
-                                { GroupID = groupID, Level = itemLevel, Icon = info.Icon, Name = info.Name };
-                            return true;
-                        }
+                        itemGroup = group;
+                        return true;
                     }
                 }
             }
 
-            itemData = new CraftableItemData();
+            itemGroup = new CraftableItemByGroupData();
             return false;
-        }
-
-        public bool GetItemInfo(FieldElementData elementData, out CraftableItemData itemData)
-        {
-            return GetItemInfo(elementData.GroupID, elementData.Level, out itemData);
+            
         }
     }
 

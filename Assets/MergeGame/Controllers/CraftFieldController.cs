@@ -49,7 +49,7 @@ public class CraftFieldController : MonoBehaviour
         var cell = _field.AddCell(rowIndex, cellIndex);
         var cellView = _fieldView.AddCellView(rowIndex, cellIndex);
 
-        var handler = new CellHandler(cell, cellView, new Vector2(rowIndex, cellIndex), dragPartController);
+        var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController);
 
         _cellHandlers.Add(handler);
     }
@@ -62,13 +62,17 @@ public class CraftFieldController : MonoBehaviour
 
         var elementData = new FieldElementData(groupID, 0);
 
-        var handler = _cellHandlers.Find((h) => h.Addres == new Vector2(celY, celX));
+        //var handler = _cellHandlers.Find((h) => h.Addres == new Vector2(celY, celX));
 
-        if (_config.ItemsConfig.GetItemInfo(elementData, out var itemData))
+        /*if (_config.ItemsConfig.GetItemInfo(elementData, out var itemData))
         {
-            handler.AddItem(itemData);
-        }
-   
+            //handler.AddItem(itemData);
+            _field.AddElementToCell(celY, celX, elementData);
+        }*/
+
+        //_field.AddElementToNearestEmptyCell(celY, celX, elementData);
+        _field.AddElementToCell(celY, celX, elementData);
+
     }
 
     public struct CraftFieldData
@@ -79,9 +83,9 @@ public class CraftFieldController : MonoBehaviour
         public FieldElementData[] StartElementsDatas;
     }
 
-    public CellHandler GetItemHandler(FieldCellView targetCell)
+    public CellHandler GetItemHandler(FieldCellView cellView)
     {
-        var handler = _cellHandlers.FirstOrDefault((h) => h.View == targetCell);
+        var handler = _cellHandlers.FirstOrDefault((h) => h.View == cellView);
         return handler;
     }
 
@@ -91,9 +95,9 @@ public class CraftFieldController : MonoBehaviour
         return handler;
     }
 
-    public CellHandler GetItemHandler(Vector2 cellAddres)
+    /*public CellHandler GetItemHandler(Vector2 cellAddres)
     {
         var handler = _cellHandlers.FirstOrDefault((h) => h.Addres == cellAddres);
         return handler;
-    }
+    }*/
 }
