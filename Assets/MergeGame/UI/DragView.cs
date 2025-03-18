@@ -1,24 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
+using MergeGame.UI._ItemView;
 using ScarFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DragView : UIView
+namespace MergeGame.UI
 {
-    [SerializeField] private Image draggingItem;
-
-    public void SetItemView(Sprite itemIcon)
+    public class DragView : UIView
     {
-        draggingItem.sprite = itemIcon;
+        [SerializeField] private Image draggingItem;
 
-        if (itemIcon)
+        public void SetItemView(ItemView itemView)
         {
-            Show();
-        }
-        else
-        {
-            Hide();
+            if (itemView != null)
+            {
+                var icon = itemView.Icon;
+                var iconSize = itemView.Rect.rect.size;
+
+                draggingItem.sprite = icon;
+
+                rect.sizeDelta = iconSize;
+           
+            }
+            else
+            {
+                draggingItem.sprite = null;
+            }
+            
+            if (draggingItem.sprite)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ScarFramework.UI
     public class UIView : MonoBehaviour
     {
         [Header("Default References")] [SerializeField]
-        private RectTransform rect;
+        protected RectTransform rect;
 
         [SerializeField] private CanvasGroup cg;
 
@@ -122,12 +122,12 @@ namespace ScarFramework.UI
 
         protected virtual void OnShow()
         {
-            Debug.Log("OnShow");
+           // Debug.Log("OnShow");
         }
 
         protected virtual void OnHide()
         {
-            Debug.Log("OnHide");
+           // Debug.Log("OnHide");
         }
     }
 }

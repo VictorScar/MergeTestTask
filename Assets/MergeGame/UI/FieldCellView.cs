@@ -21,6 +21,8 @@ namespace MergeGame.UI
 
         public void Init()
         {
+            itemView.Init();
+            
             itemView.onClick += OnClick;
             itemView.onStartDrag += OnDrag;
             itemView.onEndDrag += OnEndDrag;

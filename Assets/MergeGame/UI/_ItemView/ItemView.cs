@@ -12,16 +12,15 @@ namespace MergeGame.UI._ItemView
         IBeginDragHandler, IEndDragHandler
     {
         [SerializeField] private Image icon;
-        [SerializeField] private UIView iconView;
         [SerializeField] private UIAnimator clickAnimator;
-        
+
         public event Action onClick;
         public event Action onStartDrag;
         public event Action onEndDrag;
 
         protected override void OnInit()
         {
-            
+            clickAnimator?.Init(this);
         }
 
         public ItemViewData Data
@@ -50,7 +49,6 @@ namespace MergeGame.UI._ItemView
         {
             clickAnimator?.PlayAnimation();
             onClick?.Invoke();
-            Debug.Log("OnClick");
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -60,14 +58,12 @@ namespace MergeGame.UI._ItemView
         public void OnBeginDrag(PointerEventData eventData)
         {
             icon.gameObject.SetActive(false);
-            Debug.Log("OnStartDrag");
             onStartDrag?.Invoke();
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             icon.gameObject.SetActive(true);
-            Debug.Log("OnEndDrag");
             onEndDrag?.Invoke();
         }
     }

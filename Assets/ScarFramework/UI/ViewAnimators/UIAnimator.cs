@@ -11,9 +11,10 @@ namespace ScarFramework.UI.ViewAnimators
         protected Sequence _animation;
         protected UIView _view;
 
-        public virtual void Init(UIView view)
+        public void Init(UIView view)
         {
             _view = view;
+            OnInit(view);
         }
 
         public Tween PlayAnimation()
@@ -30,6 +31,11 @@ namespace ScarFramework.UI.ViewAnimators
 
         protected abstract void OnStartAnimation();
         protected abstract void OnEndAnimation();
+        
+        protected virtual void OnInit(UIView view)
+        {
+           
+        }
 
     }
 }

@@ -29,7 +29,7 @@ namespace MergeGame.Controllers
 
         public void StartDrag(CellHandler cellHandler)
         {
-            _dragView.SetItemView(cellHandler.View.Item.Icon);
+            _dragView.SetItemView(cellHandler.View.Item);
             _dragging = StartCoroutine(Dragging());
         }
 
