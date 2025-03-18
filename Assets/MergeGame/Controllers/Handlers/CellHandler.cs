@@ -11,18 +11,20 @@ namespace MergeGame.Controllers.Handlers
         private FieldCell _cell;
         private FieldCellView _cellView;
         private DragPartController _dragController;
+        private CreateFieldElementsController _createElementController;
 
         public FieldCell Cell => _cell;
         public FieldCellView View => _cellView;
         private CraftableItemConfig _config;
 
         public CellHandler(FieldCell cell, FieldCellView cellView, CraftableItemConfig config,
-            DragPartController dragController)
+            DragPartController dragController, CreateFieldElementsController createElementController)
         {
             _cell = cell;
             _cellView = cellView;
             _config = config;
             _dragController = dragController;
+            _createElementController = createElementController;
 
             _cellView.onStartDrag += OnStartStartDragging;
             _cellView.onEndDrag += OnEndDragging;
@@ -66,6 +68,11 @@ namespace MergeGame.Controllers.Handlers
 
         private void OnClick()
         {
+            if (_cell.FieldElement is PartGenerator partGenerator)
+            {
+                var newItemData = partGenerator.GeneratePartData;
+                _createElementController.AddCraftPartNearCell(newItemData.GroupID, newItemData.Level, _cell.Address);
+            }
         }
     }
 }

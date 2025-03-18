@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using MergeGame.Gameplay;
-using MergeGame.Gameplay._Craft;
-using UnityEngine;
-
-public class CraftPart: FieldElement
+namespace MergeGame.Gameplay._Craft
 {
-    public CraftPart(FieldElementData data) : base(data)
+    public class CraftPart: FieldElement
     {
+        public CraftPart(FieldElementData data) : base(data)
+        {
         
+        }
     }
 }

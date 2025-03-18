@@ -7,40 +7,42 @@ namespace MergeGame.Controllers
     public class CreateFieldElementsController : MonoBehaviour
     {
         private CraftField _field;
+        private CraftableItemConfig _config;
 
-        public void Init(CraftField field)
+        public void Init(CraftField field, CraftableItemConfig config)
         {
             _field = field;
+            _config = config;
         }
-        
-        public void AddProduceElement()
+
+        public void AddProduceElement(int generatorID)
         {
-            
+            if (_config.GetItemGeneratorData(generatorID, out var generatorData))
+            {
+                var elementData = generatorData.ElementInfo;
+                _field.AddToEmptyCell(new PartGenerator(generatorData.GenerateItemData, elementData));
+            }
         }
-        
+
 
         public void AddCraftPartToEmtyCell(ItemGroupID groupID, int itemlevel)
         {
-            if (groupID == ItemGroupID.None)
+            
+            if (_config.GetItemInfo(groupID, itemlevel, out var itemData))
             {
-                return;
+                var elementData = new FieldElementData(itemData.GroupID, itemData.Level, itemData.IsCanMerge);
+                _field.AddToEmptyCell(new CraftPart(elementData));
             }
-            
-            var elementData = new FieldElementData(groupID, itemlevel);
-            _field.AddToEmptyCell(new FieldElement(elementData));
-            
+          
         }
 
-        public void AddCraftPartNearCell(ItemGroupID groupID, int itemlevel, int cellY, int cellX)
+        public void AddCraftPartNearCell(ItemGroupID groupID, int itemlevel, Vector2Int address)
         {
-            if (groupID == ItemGroupID.None)
+            if (_config.GetItemInfo(groupID, itemlevel, out var itemData))
             {
-                return;
+                var elementData = new FieldElementData(itemData.GroupID, itemData.Level, itemData.IsCanMerge);
+                _field.AddElementToNearestEmptyCell(address.x, address.y, new CraftPart(elementData));
             }
-            
-            var elementData = new FieldElementData(groupID, itemlevel);
-            _field.AddElementToNearestEmptyCell(cellY, cellX, new CraftPart(elementData));
         }
     }
 }
-

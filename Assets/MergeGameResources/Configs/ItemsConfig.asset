@@ -17,57 +17,99 @@ MonoBehaviour:
     itemInfos:
     - itemName: steel ingot
       icon: {fileID: 21300000, guid: 4f9e5ffde0729f64a897525c81586fd0, type: 3}
+      isCanMerge: 1
     - itemName: Rolled steel
       icon: {fileID: 21300000, guid: 526fabc046832a943a80618fc5be8771, type: 3}
+      isCanMerge: 1
     - itemName: Nut
       icon: {fileID: 21300000, guid: 491c59e7e651afc41b1f12e4262e5166, type: 3}
+      isCanMerge: 1
     - itemName: Bolt
       icon: {fileID: 21300000, guid: baa6da97120671b428bc86828a8a1837, type: 3}
+      isCanMerge: 1
     - itemName: Shaft
       icon: {fileID: 21300000, guid: 95c1e85262369d04daecc6c376cc3d6b, type: 3}
+      isCanMerge: 1
     - itemName: Spring
       icon: {fileID: 21300000, guid: b01c53bd206b9c84aa5a96738d2a232f, type: 3}
+      isCanMerge: 1
     - itemName: Gear
       icon: {fileID: 21300000, guid: 281b5582b140b2b46a6dc216f2babf5b, type: 3}
+      isCanMerge: 1
     - itemName: Bearning
       icon: {fileID: 21300000, guid: 869cede3337be6543915dffeb979ceef, type: 3}
+      isCanMerge: 1
   - groupID: 2
     itemInfos:
     - itemName: Cuprum ingot
       icon: {fileID: 21300000, guid: 6e63ea77f8c5b334d959667031227c56, type: 3}
+      isCanMerge: 1
     - itemName: Cuprum sheet
       icon: {fileID: 21300000, guid: dad04dbdff1a2524aba8ce3a69855ce1, type: 3}
+      isCanMerge: 1
     - itemName: Cuprum wire
       icon: {fileID: 21300000, guid: 4ce840711e57b704f9b2911d98faca79, type: 3}
+      isCanMerge: 1
     - itemName: Wire
       icon: {fileID: 21300000, guid: 0ff63c121fa254846ae1ee4ec824c933, type: 3}
+      isCanMerge: 1
     - itemName: Relay
       icon: {fileID: 21300000, guid: a9a6efe02c98c0c498a9ec99b6d7e313, type: 3}
+      isCanMerge: 1
     - itemName: Button
       icon: {fileID: 21300000, guid: 3cbecb3c87c5c1441b2574bf93c7bead, type: 3}
+      isCanMerge: 1
     - itemName: Electrical box
       icon: {fileID: 21300000, guid: da6c5881ba74514468f93aa2c2afbd6b, type: 3}
+      isCanMerge: 1
     - itemName: Electronic board
       icon: {fileID: 21300000, guid: 7b1be45204057fd4caad2ba90137fc6d, type: 3}
+      isCanMerge: 1
     - itemName: Microcontroller
       icon: {fileID: 21300000, guid: b64a5c0ab8fee854b9eba408155907ec, type: 3}
+      isCanMerge: 1
   - groupID: 3
     itemInfos:
     - itemName: steel sheet
       icon: {fileID: 21300000, guid: 2a22973b892a03842937c492e3d23c4c, type: 3}
+      isCanMerge: 1
     - itemName: Tube
       icon: {fileID: 21300000, guid: 62e3b8703ba10c14eade11b7b15c669d, type: 3}
+      isCanMerge: 1
     - itemName: Beam
       icon: {fileID: 21300000, guid: 8ee80dadf26760645b2d1601cd1f6696, type: 3}
+      isCanMerge: 1
     - itemName: Beam farm
       icon: {fileID: 21300000, guid: f24cbaa4df6e0254492e05676c21dbab, type: 3}
+      isCanMerge: 1
     - itemName: Frame
       icon: {fileID: 21300000, guid: bbe7afacf6b9d8246b50a1648dd3d7f5, type: 3}
+      isCanMerge: 1
     - itemName: Construction body
       icon: {fileID: 21300000, guid: 53723ed8abea7c04d95bccfa0a16b679, type: 3}
+      isCanMerge: 1
   - groupID: 4
     itemInfos:
     - itemName: Factory machine
       icon: {fileID: 21300000, guid: e9ab575b44d8e264c825749f90cb0182, type: 3}
+      isCanMerge: 0
     - itemName: Press
       icon: {fileID: 21300000, guid: 229927cadbd65b44aab1c9dd9677b46f, type: 3}
+      isCanMerge: 0
+  generatorsInfos:
+  - ElementInfo:
+      GroupID: 4
+      Level: 0
+      IsCanMerge: 0
+    GenerateItemData:
+      GroupID: 1
+      Level: 0
+      IsCanMerge: 1
+  - ElementInfo:
+      GroupID: 4
+      Level: 1
+      IsCanMerge: 0
+    GenerateItemData:
+      GroupID: 2
+      Level: 0
+      IsCanMerge: 1

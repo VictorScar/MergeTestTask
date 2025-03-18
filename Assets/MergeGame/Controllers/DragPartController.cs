@@ -19,7 +19,8 @@ namespace MergeGame.Controllers
         private EventSystem _eventSystem;
         private CraftFieldController _fieldController;
 
-        public void Init(DragView dragView, CraftableItemConfig config, Canvas canvas, CraftFieldController fieldController)
+        public void Init(DragView dragView, CraftableItemConfig config, Canvas canvas,
+            CraftFieldController fieldController)
         {
             _dragView = dragView;
             _config = config;
@@ -66,17 +67,21 @@ namespace MergeGame.Controllers
             {
                 return;
             }
-        
+
             var fromCellItem = fromCellHandler.Cell.FieldElement;
             var targetCellItem = targetCellHandler.Cell.FieldElement;
 
             if (targetCellItem != null)
             {
-                if (targetCellItem.Data == fromCellItem.Data && !_config.IsMaxItemLevel(targetCellItem.Data))
+                if (targetCellItem.Data.IsCanMerge && targetCellItem.Data == fromCellItem.Data &&
+                    !_config.IsMaxItemLevel(targetCellItem.Data))
                 {
                     fromCellHandler.Cell.Clear();
                     targetCellHandler.Cell.FieldElement = new FieldElement(new FieldElementData
-                        { GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1 });
+                    {
+                        GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1,
+                        IsCanMerge = fromCellItem.Data.IsCanMerge
+                    });
                 }
                 else
                 {
@@ -89,46 +94,6 @@ namespace MergeGame.Controllers
                 targetCellHandler.Cell.FieldElement = fromCellHandler.Cell.FieldElement;
                 fromCellHandler.Cell.Clear();
             }
-
-
-            // var targetCell = targetCellHandler.Cell;
-
-
-
-            /*if (_config.GetItemInfo(fromCellHandler.Cell.FieldElement.Data, out var dragItemData))
-        {
-            if (targetCell.FieldElement != null)
-            {
-                if (_config.GetItemInfo(targetCell.FieldElement.Data, out var toItemData))
-                {
-                    if (targetCell.FieldElement.Data == fromCellHandler.Cell.FieldElement.Data)
-                    {
-                        var newElementData = targetCell.FieldElement.Data;
-                        newElementData.Level++;
-                        fromCellHandler.Cell.FieldElement = null;
-                        targetCellHandler.Cell.FieldElement = null;
-
-                        /*if (_config.GetItemInfo(newElementData, out var newItemData))
-                        {
-                            targetCellHandler.Cell.FieldElementAddItem(newItemData);
-                        }#1#
-                    }
-                    else
-                    {
-                        /*targetCellHandler.RemoveItem();
-                        targetCellHandler.AddItem(dragItemData);
-                        fromCellHandler.RemoveItem();
-                        fromCellHandler.AddItem(toItemData);#1#
-                    }
-                }
-            }
-            else
-            {
-                /*fromCellHandler.RemoveItem();
-                targetCellHandler.AddItem(dragItemData);#1#
-            }
-        }*/
-
         }
 
 

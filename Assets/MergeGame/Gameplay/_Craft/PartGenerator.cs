@@ -1,21 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using MergeGame.Gameplay;
-using MergeGame.Gameplay._Craft;
-using UnityEngine;
-
-public class PartGenerator : FieldElement
+namespace MergeGame.Gameplay._Craft
 {
-    private FieldElementData _partInfo;
-    private CraftField _field;
-
-    public void GenerateItem()
+    public class PartGenerator : FieldElement
     {
-        var part = new CraftPart(_partInfo);
-    }
+        private FieldElementData _generatePartData;
+        private CraftField _field;
 
-    public PartGenerator(FieldElementData craftableItemData, FieldElementData data) : base(data)
-    {
-        _partInfo = craftableItemData;
+        public FieldElementData GeneratePartData => _generatePartData;
+
+        public PartGenerator(FieldElementData craftableItemData, FieldElementData data) : base(data)
+        {
+            _generatePartData = craftableItemData;
+        }
     }
 }

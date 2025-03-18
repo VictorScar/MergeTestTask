@@ -13,6 +13,7 @@ namespace MergeGame.Controllers
     public class CraftFieldController : MonoBehaviour
     {
         [SerializeField] private ItemGroupID groupID;
+        [SerializeField] private int generatorID;
         [SerializeField] private DragPartController dragPartController;
         [SerializeField] private CreateFieldElementsController createElementsController;
         [SerializeField] private int cellY;
@@ -34,7 +35,7 @@ namespace MergeGame.Controllers
             dragPartController.Init(_dragView, _config.ItemsConfig, gameScreen.Canvas, this);
             
             _field = new CraftField();
-            createElementsController.Init(_field);
+            createElementsController.Init(_field, _config.ItemsConfig);
         }
 
         public void CreateField(CraftFieldData data)
@@ -53,7 +54,7 @@ namespace MergeGame.Controllers
             var cell = _field.AddCell(rowIndex, cellIndex);
             var cellView = _fieldView.AddCellView(rowIndex, cellIndex);
 
-            var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController);
+            var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController, createElementsController);
 
             _cellHandlers.Add(handler);
         }
@@ -67,7 +68,13 @@ namespace MergeGame.Controllers
         [Button("Spawn in cell Item")]
         public void SpawnInCellItem()
         {
-            createElementsController.AddCraftPartNearCell(groupID, 0, cellY, cellX);
+            createElementsController.AddCraftPartNearCell(groupID, 0, new Vector2Int(cellY, cellX));
+        }
+        
+        [Button("Spawn Generator")]
+        public void SpawnGenerator()
+        {
+            createElementsController.AddProduceElement(generatorID);
         }
 
         public struct CraftFieldData

@@ -20,7 +20,7 @@ namespace MergeGame.Gameplay
                     _rows.Add(row);
                 }
 
-                var cell = new FieldCell();
+                var cell = new FieldCell(rowIndex, _rows[rowIndex].Elements.Count);
                 _rows[rowIndex].Elements.Add(cell);
 
                 return cell;
@@ -177,15 +177,18 @@ namespace MergeGame.Gameplay
         public List<FieldCell> Elements = new List<FieldCell>();
     }
 
+    [Serializable]
     public struct FieldElementData
     {
         public ItemGroupID GroupID;
         public int Level;
+        public bool IsCanMerge;
 
-        public FieldElementData(ItemGroupID groupID, int level)
+        public FieldElementData(ItemGroupID groupID, int level, bool isCanMerge)
         {
             GroupID = groupID;
             Level = level;
+            IsCanMerge = isCanMerge;
         }
 
         public static bool operator ==(FieldElementData dataA, FieldElementData dataB)
