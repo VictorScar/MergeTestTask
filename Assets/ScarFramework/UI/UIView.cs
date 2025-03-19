@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ScarFramework.UI
 {
     [RequireComponent(typeof(CanvasGroup))]
-    [RequireComponent(typeof(RectTransform))]
+    
     public class UIView : MonoBehaviour
     {
         [Header("Default References")] [SerializeField]
@@ -25,11 +25,6 @@ namespace ScarFramework.UI
 
         public void Init()
         {
-            if (!rect)
-            {
-                GetComponent<RectTransform>();
-            }
-
             if (!cg)
             {
                 cg = GetComponent<CanvasGroup>();
@@ -72,7 +67,7 @@ namespace ScarFramework.UI
         {
             if (!immediately)
             {
-              //  gameObject.SetActive(true);
+             
 
                 if (showInAnimator)
                 {
@@ -96,6 +91,8 @@ namespace ScarFramework.UI
    
         public void Hide(bool immediately = false)
         {
+            showInAnimator?.Kill();
+            
             if (!immediately)
             {
                 if (hideInAnimator)

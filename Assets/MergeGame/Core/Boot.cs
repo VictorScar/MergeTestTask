@@ -1,14 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Boot : MonoBehaviour
+namespace MergeGame.Core
 {
-   [SerializeField] private Game game;
-    
-    private void Start()
+    public class Boot : MonoBehaviour
     {
-       game.Init();
+        [SerializeField] private Game gamePrefab;
+        private Game _game;
+
+        private void Start()
+        {
+            _game = Instantiate(gamePrefab);
+            _game.Init();
+        }
     }
 }

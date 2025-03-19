@@ -1,29 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using ScarFramework.UI;
 using UnityEngine;
 
-public class GameServiceLocator : MonoBehaviour
+namespace MergeGame.Core
 {
-    [SerializeField] private UISystem uiSystem;
-    //[SerializeField] private UISystem profile;
-    //[SerializeField] private SceneController sceneController;
-
-    public static GameServiceLocator I { get; private set; }
-
-    public UISystem UI => uiSystem;
-    
-    public void Init()
+    public class GameServiceLocator : MonoBehaviour
     {
-        if (I == null)
+        [SerializeField] private UISystem uiSystem;
+        [SerializeField] private SceneController sceneController;
+
+        public static GameServiceLocator I { get; private set; }
+
+        public UISystem UI => uiSystem;
+        public SceneController SceneController => sceneController;
+
+        public void Init(GameConfig config)
         {
-            I = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+            if (I == null)
+            {
+                I = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         
-        uiSystem.Init();
+            uiSystem.Init();
+            sceneController.Init(config.GameSceneIndex);
+        }
     }
 }

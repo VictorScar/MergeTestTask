@@ -7,16 +7,15 @@ namespace MergeGame.Core
     public class GameConfig : ScriptableObject
     {
         [SerializeField] private CraftableItemConfig itemsConfig;
-        [SerializeField] private int craftFieldWidth = 10;  
-        [SerializeField] private int craftFieldHeight = 10;  
-        [SerializeField] private float mergeDuration = 2f;
+        [SerializeField] private int craftFieldWidth = 10;
+        [SerializeField] private int craftFieldHeight = 10;
         [SerializeField] private LevelData fieldData;
-
+        [SerializeField] private int gameSceneIndex = 1;
 
         public CraftableItemConfig ItemsConfig => itemsConfig;
         public int FieldWidth => craftFieldWidth;
         public int FieldHeight => craftFieldHeight;
-        public float MergeDuration => mergeDuration;
         public LevelData FieldData => fieldData;
+        public int GameSceneIndex => gameSceneIndex;
     }
 }

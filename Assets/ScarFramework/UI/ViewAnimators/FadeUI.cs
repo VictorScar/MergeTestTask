@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ScarFramework.UI.ViewAnimators
 {
@@ -26,7 +25,12 @@ namespace ScarFramework.UI.ViewAnimators
         protected override void OnStartAnimation()
         {
             _view.CG.alpha = startValue;
-            _view.gameObject.SetActive(isShow);
+            
+            if (isShow)
+            {
+                _view.gameObject.SetActive(isShow);
+            }
+           
         }
 
         protected override void OnEndAnimation()

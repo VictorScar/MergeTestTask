@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using MergeGame.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Game : MonoBehaviour
+namespace MergeGame.Core
 {
-    [SerializeField] private GameConfig config;
-    [SerializeField] private GameServiceLocator serviceLocator;
-    [SerializeField] private GameLevelScenario levelScenario;
-    
-    public void Init()
+    public class Game : MonoBehaviour
     {
-        serviceLocator.Init();
-        levelScenario.Init(config);
-        levelScenario.Run();
+        [SerializeField] private GameConfig config;
+        [SerializeField] private GameServiceLocator serviceLocator;
+        [SerializeField] private GameLevelScenario levelScenario;
+
+
+        public void Init()
+        {
+            DontDestroyOnLoad(gameObject);
+            serviceLocator.Init(config);
+            levelScenario.Init(config);
+            levelScenario.Run();
+        }
     }
 }

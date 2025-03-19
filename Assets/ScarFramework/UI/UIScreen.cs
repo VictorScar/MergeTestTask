@@ -11,7 +11,7 @@ namespace ScarFramework.UI
         
         protected override void OnInit()
         {
-            base.OnInit();
+            gameObject.SetActive(showOnInit);
         }
         
         
