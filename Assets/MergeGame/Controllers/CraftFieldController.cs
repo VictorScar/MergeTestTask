@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace MergeGame.Controllers
 {
-    public class CraftFieldController : MonoBehaviour
+    public class CraftFieldController : GameplayControllerBase
     {
         [SerializeField] private ItemGroupID groupID;
         [SerializeField] private int generatorID;
@@ -26,7 +26,7 @@ namespace MergeGame.Controllers
 
         private List<CellHandler> _cellHandlers = new List<CellHandler>();
 
-        public void Init(GameConfig config)
+        public override void Init(GameConfig config)
         {
             _config = config;
             var gameScreen = GameServiceLocator.I.UI.GetScreen<GameScreen>();

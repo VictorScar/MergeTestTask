@@ -1,36 +1,35 @@
+using MergeGame._Scenarios;
 using MergeGame.Controllers;
 using MergeGame.Core;
-using MergeGame.Gameplay._Craft;
 using MergeGame.UI;
 using ScarFramework.Button;
 using ScarFramework.UI;
-using UnityEngine;
 
-public class GameLevelScenario : MonoBehaviour
+public class GameLevelScenario : GameplayScenarioBase
 {
-    [SerializeField] private CraftFieldController fieldController;
+    private CraftFieldController _fieldController;
     private GameScreen _gameScreen;
     private UIScreen _loadingScreen;
-    private CraftFieldPanel _fieldPanel;
+
     private GameConfig _config;
     private SceneController _sceneController;
 
-    public void Init(GameConfig config)
+    public override void Init(GameConfig config)
     {
         _config = config;
-        fieldController.Init(config);
+        _fieldController = GameServiceLocator.I.GameplayControllersProvider.GetController<CraftFieldController>();
+        _fieldController.Init(config);
         _gameScreen = GameServiceLocator.I.UI.GetScreen<GameScreen>();
         _loadingScreen = GameServiceLocator.I.UI.GetScreen<LoadingScreen>();
-        _fieldPanel = _gameScreen.FieldPanel;
         _sceneController = GameServiceLocator.I.SceneController;
     }
 
-    public void Run()
+    protected override void RunInternal()
     {
         var data = new CreateFieldData();
         data.FieldWidth = _config.FieldWidth;
         data.FieldHeight = _config.FieldHeight;
-        fieldController.CreateField(data);
+        _fieldController.CreateField(data);
         _sceneController.LoadGameScene();
         _sceneController.onLoadIsCompleted += GenerateGameField;
     }
@@ -38,7 +37,7 @@ public class GameLevelScenario : MonoBehaviour
     private void GenerateGameField()
     {
         _sceneController.onLoadIsCompleted -= GenerateGameField;
-        fieldController.GenerateLevelField(_config.FieldData);
+        _fieldController.GenerateLevelField(_config.FieldData);
         _gameScreen.Show(true);
         _loadingScreen.Hide();
     }
@@ -46,6 +45,6 @@ public class GameLevelScenario : MonoBehaviour
     [Button("Regenerate Field")]
     public void RegenerateField()
     {
-        fieldController.GenerateLevelField(_config.FieldData);
+        _fieldController.GenerateLevelField(_config.FieldData);
     }
 }

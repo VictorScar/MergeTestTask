@@ -21,7 +21,7 @@ namespace ScarFramework.UI.ViewAnimators
         {
             OnStartAnimation();
             var viewAnimation  = AnimateInternal();
-            viewAnimation.OnKill(OnEndAnimation);
+            viewAnimation.OnComplete(OnEndAnimation);
             return viewAnimation;
         }
 

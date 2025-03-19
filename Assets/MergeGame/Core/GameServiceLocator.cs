@@ -1,3 +1,5 @@
+using MergeGame._Scenarios;
+using MergeGame.Controllers;
 using ScarFramework.UI;
 using UnityEngine;
 
@@ -7,11 +9,15 @@ namespace MergeGame.Core
     {
         [SerializeField] private UISystem uiSystem;
         [SerializeField] private SceneController sceneController;
-
+        [SerializeField] private GameplayControllersProvider gameplayControllersProvider;
+        [SerializeField] private ScenariosContainer scenariosContainer;
+        
         public static GameServiceLocator I { get; private set; }
 
         public UISystem UI => uiSystem;
         public SceneController SceneController => sceneController;
+        public GameplayControllersProvider GameplayControllersProvider => gameplayControllersProvider;
+        public ScenariosContainer ScenariosContainer => scenariosContainer;
 
         public void Init(GameConfig config)
         {
@@ -26,6 +32,8 @@ namespace MergeGame.Core
         
             uiSystem.Init();
             sceneController.Init(config.GameSceneIndex);
+            gameplayControllersProvider.Init(config);
+            scenariosContainer.Init(config);
         }
     }
 }
