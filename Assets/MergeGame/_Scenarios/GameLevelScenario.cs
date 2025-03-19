@@ -27,7 +27,7 @@ public class GameLevelScenario : MonoBehaviour
 
     public void Run()
     {
-        var data = new CraftFieldController.CraftFieldData();
+        var data = new CreateFieldData();
         data.FieldWidth = _config.FieldWidth;
         data.FieldHeight = _config.FieldHeight;
         fieldController.CreateField(data);

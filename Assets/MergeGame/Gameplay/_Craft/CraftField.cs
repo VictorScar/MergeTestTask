@@ -1,50 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using MergeGame.Controllers;
 using MergeGame.Gameplay._Craft;
-using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace MergeGame.Gameplay
 {
     public class CraftField
     {
-        private List<FieldElementsRow> _rows = new List<FieldElementsRow>();
+        // private List<FieldElementsRow> _rows = new List<FieldElementsRow>();
+
+        private FieldCell[,] _cells;
+
+        public int FieldHight => _cells.GetLength(0);
+        public int FieldWidth => _cells.GetLength(1);
+
+
+        public CraftField(CreateFieldData data)
+        {
+            _cells = new FieldCell[data.FieldHeight, data.FieldWidth];
+        }
 
         public FieldCell AddCell(int rowIndex, int cellIndex)
         {
-            if (rowIndex >= 0)
+            if (ValidateCell(rowIndex, cellIndex))
             {
-                if (_rows.Count <= rowIndex)
-                {
-                    var row = new FieldElementsRow();
-                    _rows.Add(row);
-                }
-
-                var cell = new FieldCell(rowIndex, _rows[rowIndex].Elements.Count);
-                _rows[rowIndex].Elements.Add(cell);
-
-                return cell;
+                var newCell = new FieldCell(rowIndex, cellIndex);
+                _cells[rowIndex, cellIndex] = newCell;
+                return newCell;
             }
 
             return null;
         }
 
-        public void RemoveCell(int rowIndex, int cellIndex)
-        {
-            if (ValidateCell(rowIndex, cellIndex))
-            {
-                var row = _rows[rowIndex];
-                row.Elements.RemoveAt(cellIndex);
-
-                if (row.Elements.Count < 1)
-                {
-                    _rows.Remove(row);
-                }
-            }
-        }
-
-        public bool AddToEmptyCell(FieldElement fieldElement)
+        /*public bool AddToEmptyCell(FieldElement fieldElement)
         {
             if (_rows != null)
             {
@@ -52,21 +39,24 @@ namespace MergeGame.Gameplay
                 {
                     for (int j = 0; j < _rows[i].Elements.Count; j++)
                     {
-                        var cell = GetCell(i, j);
-
-                        if (!cell.HasElement)
+                        if(ValidateCell(i, j))
                         {
-                            cell.FieldElement = fieldElement;
-                            return true;
+                            var cell = _cells(i, j);
+
+                            if (!cell.HasElement)
+                            {
+                                cell.FieldElement = fieldElement;
+                                return true;
+                            }
                         }
                     }
                 }
             }
 
             return false;
-        }
+        }*/
 
-        public bool AddElementToNearestEmptyCell(int rowIndex, int cellIndex, FieldElement fieldElement)
+        /*public bool AddElementToNearestEmptyCell(int rowIndex, int cellIndex, FieldElement fieldElement)
         {
             if (FindNearestEmptyCell(rowIndex, cellIndex, out var nearestCell))
             {
@@ -74,8 +64,7 @@ namespace MergeGame.Gameplay
             }
 
             return false;
-        }
-
+        }*/
 
         public bool AddElementToCell(int rowIndex, int cellIndex, FieldElement fieldElement)
         {
@@ -101,7 +90,7 @@ namespace MergeGame.Gameplay
             return false;
         }
 
-        public bool FindNearestEmptyCell(int rowIndex, int cellIndex, out FieldCell nearestEmptyCell)
+        /*public bool FindNearestEmptyCell(int rowIndex, int cellIndex, out FieldCell nearestEmptyCell)
         {
             var targetPosition = new Vector2Int(rowIndex, cellIndex);
             nearestEmptyCell = null;
@@ -132,28 +121,13 @@ namespace MergeGame.Gameplay
             }
 
             return isFound;
-          
-        }
-
-        public bool RemoveElementFromCell(int rowIndex, int cellIndex)
-        {
-            if (TryGetCell(rowIndex, cellIndex, out var cell))
-            {
-                if (cell.HasElement)
-                {
-                    cell.FieldElement = null;
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        }*/
 
         public bool TryGetCell(int rowIndex, int cellIndex, out FieldCell cell)
         {
             if (ValidateCell(rowIndex, cellIndex))
             {
-                cell = GetCell(rowIndex, cellIndex);
+                cell = _cells[rowIndex, cellIndex];
                 return true;
             }
 
@@ -161,41 +135,33 @@ namespace MergeGame.Gameplay
             return false;
         }
 
-        private FieldCell GetCell(int rowIndex, int cellIndex)
-        {
-            return _rows[rowIndex].Elements[cellIndex];
-        }
-
         private bool ValidateCell(int rowIndex, int cellIndex)
         {
-            return rowIndex > -1 && rowIndex < _rows.Count && cellIndex > -1 &&
-                   cellIndex < _rows[rowIndex].Elements.Count;
+            return rowIndex >= 0 && rowIndex < _cells.GetLength(0) && cellIndex >= 0 &&
+                   cellIndex < _cells.GetLength(1);
         }
 
         public void Clear()
         {
-            foreach (var row in _rows)
+            foreach (var cell in _cells)
             {
-                foreach (var cell in row.Elements)
-                {
-                    cell.Clear();
-                }
+                cell.Clear();
             }
         }
 
-        public bool AddItemIntoRandomCell(FieldElement element)
+        /*public bool AddItemIntoRandomCell(FieldElement element)
         {
             var rowIndex = Random.Range(0, _rows.Count);
             var cellIndex = Random.Range(0, _rows[rowIndex].Elements.Count);
 
             return AddElementToNearestEmptyCell(rowIndex, cellIndex, element);
-        }
+        }*/
     }
 
-    public class FieldElementsRow
+    /*public class FieldElementsRow
     {
         public List<FieldCell> Elements = new List<FieldCell>();
-    }
+    }*/
 
     [Serializable]
     public struct FieldElementData

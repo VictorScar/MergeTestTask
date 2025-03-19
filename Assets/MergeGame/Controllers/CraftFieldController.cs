@@ -33,13 +33,13 @@ namespace MergeGame.Controllers
             _fieldView = gameScreen.FieldPanel;
             _dragView = gameScreen.DragView;
             dragPartController.Init(_dragView, _config.ItemsConfig, gameScreen.Canvas, this);
-            
-            _field = new CraftField();
-            createElementsController.Init(_field, _config.ItemsConfig);
         }
 
-        public void CreateField(CraftFieldData data)
+        public void CreateField(CreateFieldData data)
         {
+            _field = new CraftField(data);
+            createElementsController.Init(_field, _config.ItemsConfig);
+
             for (int i = 0; i < data.FieldHeight; i++)
             {
                 for (int j = 0; j < data.FieldWidth; j++)
@@ -48,7 +48,7 @@ namespace MergeGame.Controllers
                 }
             }
         }
-        
+
         public void GenerateLevelField(LevelData data)
         {
             _field.Clear();
@@ -69,47 +69,39 @@ namespace MergeGame.Controllers
                     {
                         createElementsController.AddCraftPartToRandomEmtyCell(itemInfo.GroupID, itemInfo.Level);
                     }
-                   
                 }
             }
-
         }
 
         private void AddCell(int rowIndex, int cellIndex)
         {
             var cell = _field.AddCell(rowIndex, cellIndex);
-            var cellView = _fieldView.AddCellView(rowIndex, cellIndex);
 
-            var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController, createElementsController);
-
-            _cellHandlers.Add(handler);
+            if (cell != null)
+            {
+                var cellView = _fieldView.AddCellView(rowIndex, cellIndex);
+                var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController,
+                    createElementsController);
+                _cellHandlers.Add(handler);
+            }
         }
 
         [Button("Spawn Item")]
         public void SpawnItem()
         {
-            createElementsController.AddCraftPartToEmtyCell(groupID, 0);
+            createElementsController.AddCraftPartToEmtyCell(groupID, 0, new Vector2Int(cellY, cellX));
         }
-    
+
         [Button("Spawn in cell Item")]
         public void SpawnInCellItem()
         {
             createElementsController.AddCraftPartNearCell(groupID, 0, new Vector2Int(cellY, cellX));
         }
-        
+
         [Button("Spawn Generator")]
         public void SpawnGenerator()
         {
             createElementsController.AddProduceElement(generatorID);
-        }
-        
-        
-
-        public struct CraftFieldData
-        {
-            public int FieldWidth;
-            public int FieldHeight;
-           
         }
 
         public CellHandler GetItemHandler(FieldCellView cellView)
@@ -117,13 +109,11 @@ namespace MergeGame.Controllers
             var handler = _cellHandlers.FirstOrDefault((h) => h.View == cellView);
             return handler;
         }
+    }
 
-        public CellHandler GetItemHandler(FieldCell cell)
-        {
-            var handler = _cellHandlers.FirstOrDefault((h) => h.Cell == cell);
-            return handler;
-        }
-
-     
+    public struct CreateFieldData
+    {
+        public int FieldWidth;
+        public int FieldHeight;
     }
 }

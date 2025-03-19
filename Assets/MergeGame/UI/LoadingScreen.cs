@@ -13,6 +13,5 @@ namespace MergeGame.UI
         {
             loadingIndicator.Rotate(loadingIndicator.forward, rotationSpeed * Time.deltaTime);
         }
-     
     }
 }
