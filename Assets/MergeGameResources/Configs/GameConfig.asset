@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2064d73ea4cc948839029578b97765, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  itemsConfig: {fileID: 11400000, guid: 109be5fd38c399f4da28a9bb71375099, type: 2}
+  craftFieldWidth: 9
+  craftFieldHeight: 5
+  fieldDatas:
+  - tasks: []
+    generatorsIDs: 0000000001000000
+    startItemsInfos:
+    - GroupID: 1
+      Level: 0
+      ItemCount: 5
+    - GroupID: 1
+      Level: 1
+      ItemCount: 2
+    - GroupID: 2
+      Level: 0
+      ItemCount: 1
+  - tasks: []
+    generatorsIDs: 0000000001000000
+    startItemsInfos:
+    - GroupID: 1
+      Level: 0
+      ItemCount: 3
+    - GroupID: 2
+      Level: 0
+      ItemCount: 3
+  gameSceneIndex: 1
