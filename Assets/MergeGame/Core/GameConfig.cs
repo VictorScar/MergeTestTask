@@ -9,13 +9,13 @@ namespace MergeGame.Core
         [SerializeField] private CraftableItemConfig itemsConfig;
         [SerializeField] private int craftFieldWidth = 10;
         [SerializeField] private int craftFieldHeight = 10;
-        [SerializeField] private LevelData fieldData;
+        [SerializeField] private FieldData[] fieldDatas;
         [SerializeField] private int gameSceneIndex = 1;
 
         public CraftableItemConfig ItemsConfig => itemsConfig;
         public int FieldWidth => craftFieldWidth;
         public int FieldHeight => craftFieldHeight;
-        public LevelData FieldData => fieldData;
+        public FieldData[] FieldDatas => fieldDatas;
         public int GameSceneIndex => gameSceneIndex;
     }
 }

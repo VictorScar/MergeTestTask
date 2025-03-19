@@ -4,6 +4,7 @@ using MergeGame.Core;
 using MergeGame.UI;
 using ScarFramework.Button;
 using ScarFramework.UI;
+using UnityEngine;
 
 public class GameLevelScenario : GameplayScenarioBase
 {
@@ -23,6 +24,15 @@ public class GameLevelScenario : GameplayScenarioBase
         _loadingScreen = GameServiceLocator.I.UI.GetScreen<LoadingScreen>();
         _sceneController = GameServiceLocator.I.SceneController;
     }
+    
+    [Button("Regenerate Field")]
+    public void RegenerateField()
+    {
+        if (GetRandomFieldData(out var fieldData))
+        {
+            _fieldController.GenerateLevelField(fieldData);
+        }
+    }
 
     protected override void RunInternal()
     {
@@ -37,14 +47,29 @@ public class GameLevelScenario : GameplayScenarioBase
     private void GenerateGameField()
     {
         _sceneController.onLoadIsCompleted -= GenerateGameField;
-        _fieldController.GenerateLevelField(_config.FieldData);
+
+        if (GetRandomFieldData(out var fieldData))
+        {
+            _fieldController.GenerateLevelField(fieldData);
+        }
+        
         _gameScreen.Show(true);
         _loadingScreen.Hide();
     }
 
-    [Button("Regenerate Field")]
-    public void RegenerateField()
+    private bool GetRandomFieldData(out FieldData fieldData)
     {
-        _fieldController.GenerateLevelField(_config.FieldData);
+        var fieldDatas = _config.FieldDatas;
+        
+        if (fieldDatas != null && fieldDatas.Length > 0)
+        {
+            var index = Random.Range(0, fieldDatas.Length);
+            fieldData = fieldDatas[index];
+            return true;
+        }
+
+        fieldData = new FieldData();
+        return false;
     }
+
 }

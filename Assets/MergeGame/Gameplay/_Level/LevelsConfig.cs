@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName ="Configs/Levels)", fileName = "LevelsConfig")]
 public class LevelsConfig : ScriptableObject
 {
-    [SerializeField] private LevelData[] datas;
+    [SerializeField] private FieldData[] datas;
 
-    public LevelData[] Datas => datas;
+    public FieldData[] Datas => datas;
 }

@@ -49,7 +49,7 @@ namespace MergeGame.Controllers
             }
         }
 
-        public void GenerateLevelField(LevelData data)
+        public void GenerateLevelField(FieldData data)
         {
             _field.Clear();
 

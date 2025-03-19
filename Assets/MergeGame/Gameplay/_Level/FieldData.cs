@@ -5,7 +5,7 @@ using MergeGame.Gameplay._Craft;
 using UnityEngine;
 
 [Serializable]
-public struct LevelData
+public struct FieldData
 {
     [SerializeField] private LevelTask[] tasks;
     [SerializeField] private int[] generatorsIDs;
