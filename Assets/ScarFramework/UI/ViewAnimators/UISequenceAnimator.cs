@@ -18,13 +18,9 @@ namespace ScarFramework.UI.ViewAnimators
                 }
             }
         }
+       
 
-        public override UIAnimator GetInstance()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override Tween AnimateInternal()
+        protected override Tween AnimateInternal(UIView view)
         {
             if (animators != null)
             {
@@ -32,7 +28,7 @@ namespace ScarFramework.UI.ViewAnimators
 
                 foreach (var animator in animators)
                 {
-                    animationInternal.Append(animator.PlayAnimation());
+                    animationInternal.Append(animator.PlayAnimation(view));
                 }
 
                 animationInternal.Play();
@@ -43,14 +39,14 @@ namespace ScarFramework.UI.ViewAnimators
             return null;
         }
 
-        protected override void OnStartAnimation()
+        protected override void OnStartAnimation(UIView view)
         {
         
         }
 
         protected override void OnEndAnimation()
         {
-           // _view.Rect.localScale = Vector3.one;
+           
         }
     }
 }

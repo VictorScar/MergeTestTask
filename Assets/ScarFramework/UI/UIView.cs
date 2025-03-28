@@ -28,12 +28,9 @@ namespace ScarFramework.UI
             {
                 cg = GetComponent<CanvasGroup>();
             }
-
-            showInAnimator = showInAnimator?.GetInstance();
+            
             showInAnimator?.Init(this);
-
-            hideInAnimator = hideInAnimator?.GetInstance();
-            hideInAnimator?.Init(this);
+           hideInAnimator?.Init(this);
 
             OnInit();
         }
@@ -69,7 +66,7 @@ namespace ScarFramework.UI
             {
                 if (showInAnimator)
                 {
-                    showInAnimator.PlayAnimation().OnKill(ShowInternal);
+                    showInAnimator.PlayAnimation(this).OnKill(ShowInternal);
                     gameObject.SetActive(true);
                 }
                 else
@@ -91,7 +88,7 @@ namespace ScarFramework.UI
             {
                 if (hideInAnimator)
                 {
-                    hideInAnimator.PlayAnimation().OnKill(HideInternal);
+                    hideInAnimator.PlayAnimation(this).OnKill(HideInternal);
                 }
                 else
                 {

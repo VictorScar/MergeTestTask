@@ -19,13 +19,13 @@ namespace ScarFramework.UI
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            onClickUpAnimator?.PlayAnimation();
+            onClickUpAnimator?.PlayAnimation(this);
             Debug.Log("PointerUp");
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            onClickDownAnimator?.PlayAnimation();
+            onClickDownAnimator?.PlayAnimation(this);
             Debug.Log("PointerDown");
         }
     }

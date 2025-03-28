@@ -22,9 +22,9 @@ namespace MergeGame.UI._ItemView
 
         protected override void OnInit()
         {
-            pointerDownAnimator = pointerDownAnimator.GetInstance();
+            //pointerDownAnimator = pointerDownAnimator.GetInstance();
             pointerDownAnimator?.Init(this);
-            pointerUpAnimator = pointerUpAnimator.GetInstance();
+            //pointerUpAnimator = pointerUpAnimator.GetInstance();
             pointerUpAnimator?.Init(this);
         }
 
@@ -73,12 +73,12 @@ namespace MergeGame.UI._ItemView
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            pointerDownAnimator?.PlayAnimation();
+            pointerDownAnimator?.PlayAnimation(this);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            pointerUpAnimator?.PlayAnimation();
+            pointerUpAnimator?.PlayAnimation(this);
         }
     }
 

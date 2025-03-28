@@ -9,12 +9,12 @@ namespace ScarFramework.UI.ViewAnimators
         [SerializeField] private Vector3 startValue;
         [SerializeField] private Vector3 endValue;
         
-        protected override Tween AnimateInternal()
+        protected override Tween AnimateInternal(UIView view)
         {
             var animationInternal = DOTween.Sequence();
             animationInternal
-                .Append(_view.Rect.DORotate(startValue, duration))
-                .Append(_view.Rect.DORotate(endValue, duration))
+                .Append(view.Rect.DORotate(startValue, duration))
+                .Append(view.Rect.DORotate(endValue, duration))
                 .SetLoops(-1);
 
             return animationInternal;
@@ -22,7 +22,7 @@ namespace ScarFramework.UI.ViewAnimators
 
   
 
-        protected override void OnStartAnimation()
+        protected override void OnStartAnimation(UIView view)
         {
         }
 
@@ -30,14 +30,6 @@ namespace ScarFramework.UI.ViewAnimators
         {
         }
 
-        public override UIAnimator GetInstance()
-        {
-            var instance = ScriptableObject.CreateInstance<RotateUI>();
-            instance.duration = duration;
-            instance.startValue = startValue;
-            instance.endValue = endValue;
 
-            return instance;
-        }
     }
 }

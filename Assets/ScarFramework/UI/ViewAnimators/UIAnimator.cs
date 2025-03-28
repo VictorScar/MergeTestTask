@@ -9,30 +9,30 @@ namespace ScarFramework.UI.ViewAnimators
         [SerializeField] protected Ease ease = Ease.OutQuad;
         
         private Sequence _animation;
-        protected UIView _view;
+       // protected UIView _view;
 
         public void Init(UIView view)
         {
-            _view = view;
+            //_view = view;
             OnInit(view);
         }
 
-        public Tween PlayAnimation()
+        public Tween PlayAnimation(UIView view)
         {
-            OnStartAnimation();
+            OnStartAnimation(view);
            _animation  = DOTween.Sequence();
-            _animation.Append(AnimateInternal().OnKill(OnEndAnimation));
+            _animation.Append(AnimateInternal(view).OnKill(OnEndAnimation));
             return _animation;
         }
 
-        protected abstract Tween AnimateInternal();
+        protected abstract Tween AnimateInternal(UIView view);
 
         public void Kill()
         {
             _animation?.Kill();
         }
 
-        protected abstract void OnStartAnimation();
+        protected abstract void OnStartAnimation(UIView view);
         protected abstract void OnEndAnimation();
         
         protected virtual void OnInit(UIView view)
@@ -40,7 +40,7 @@ namespace ScarFramework.UI.ViewAnimators
            
         }
 
-        public abstract UIAnimator GetInstance();
+        //public abstract UIAnimator GetInstance();
 
     }
 }

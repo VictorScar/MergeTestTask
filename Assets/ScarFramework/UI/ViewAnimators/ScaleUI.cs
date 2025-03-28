@@ -11,35 +11,25 @@ namespace ScarFramework.UI.ViewAnimators
         [SerializeField] protected float endValue;
 
 
-        protected override Tween AnimateInternal()
+        protected override Tween AnimateInternal(UIView view)
         {
             Debug.Log("ScaleUI start");
             var animationInternal = DOTween.Sequence();
             animationInternal
-                .Append(_view.Rect.DOScale(endValue, duration).SetEase(ease));
+                .Append(view.Rect.DOScale(endValue, duration).SetEase(ease));
             return animationInternal;
         }
  
 
-        protected override void OnStartAnimation()
+        protected override void OnStartAnimation(UIView view)
         {
-            _view.Rect.localScale = new Vector3(startValue, startValue, startValue);
+            view.Rect.localScale = new Vector3(startValue, startValue, startValue);
         }
 
         protected override void OnEndAnimation()
         {
             //_view.Rect.localScale = new Vector3(endValue, endValue, endValue);
             Debug.Log("ScaleUI end");
-        }
-
-        public override UIAnimator GetInstance()
-        {
-            var instance = CreateInstance<ScaleUI>();
-            instance.duration = duration;
-            instance.startValue = startValue;
-            instance.endValue = endValue;
-
-            return instance;
-        }
+       }
     }
 }
