@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using ScarFramework.UI;
 using UnityEngine;
 
-public class UploadReadyPartController : MonoBehaviour
+namespace MergeGame.Controllers
 {
-    // Start is called before the first frame update
-    void Start()
+    public class UploadReadyPartController : MonoBehaviour
     {
-        
-    }
+        private UIClickableView _uploadBtn;
+        private UIClickableView _removeBtn;
 
-    // Update is called once per frame
-    void Update()
-    {
+        public void Init()
+        {
+            
+        }
+        
         
     }
 }

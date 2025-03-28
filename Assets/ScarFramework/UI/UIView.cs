@@ -6,7 +6,6 @@ using UnityEngine;
 namespace ScarFramework.UI
 {
     [RequireComponent(typeof(CanvasGroup))]
-    
     public class UIView : MonoBehaviour
     {
         [Header("Default References")] [SerializeField]
@@ -16,9 +15,9 @@ namespace ScarFramework.UI
 
         [Header("Animations")] [SerializeField]
         private UIAnimator showInAnimator;
-      
+
         [SerializeField] private UIAnimator hideInAnimator;
-    
+
 
         public RectTransform Rect => rect;
         public CanvasGroup CG => cg;
@@ -29,11 +28,11 @@ namespace ScarFramework.UI
             {
                 cg = GetComponent<CanvasGroup>();
             }
-            
+
             showInAnimator?.Init(this);
-           
+
             hideInAnimator?.Init(this);
-          
+
 
             OnInit();
         }
@@ -43,68 +42,60 @@ namespace ScarFramework.UI
         {
             Show();
         }
-        
+
         [Button("Hide")]
         public void DebugHide()
         {
             Hide();
         }
-        
+
         [Button("Init")]
         public void DebugInit()
         {
             Init();
         }
-        
+
         [Button("Kill")]
         public void DebugKill()
         {
             showInAnimator?.Kill();
             hideInAnimator?.Kill();
         }
-        
+
         public void Show(bool immediately = false)
         {
             if (!immediately)
             {
-             
-
                 if (showInAnimator)
                 {
-                    showInAnimator.PlayAnimation().OnKill(OnShow);
+                    showInAnimator.PlayAnimation().OnKill(ShowInternal);
+                    gameObject.SetActive(true);
                 }
                 else
                 {
-                    gameObject.SetActive(true);
-                    OnShow();
+                    ShowInternal();
                 }
-               
-
             }
             else
             {
-                gameObject.SetActive(true);
-                OnShow();
+                ShowInternal();
             }
-           
         }
-   
+
         public void Hide(bool immediately = false)
         {
             showInAnimator?.Kill();
-            
+
             if (!immediately)
             {
                 if (hideInAnimator)
                 {
-                    hideInAnimator.PlayAnimation().OnKill(OnHide);
+                    hideInAnimator.PlayAnimation().OnKill(HideInternal);
                 }
                 else
                 {
-                    gameObject.SetActive(false);
-                    OnHide();
+                    HideInternal();
                 }
-                
             }
             else
             {
@@ -113,18 +104,30 @@ namespace ScarFramework.UI
             }
         }
 
+        private void ShowInternal()
+        {
+            gameObject.SetActive(true);
+            OnShow();
+        }
+
+        private void HideInternal()
+        {
+            gameObject.SetActive(false);
+            OnHide();
+        }
+
         protected virtual void OnInit()
         {
         }
 
         protected virtual void OnShow()
         {
-           // Debug.Log("OnShow");
+            // Debug.Log("OnShow");
         }
 
         protected virtual void OnHide()
         {
-           // Debug.Log("OnHide");
+            // Debug.Log("OnHide");
         }
     }
 }

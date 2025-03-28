@@ -10,19 +10,16 @@ namespace ScarFramework.UI.ViewAnimators
         
         protected override Tween AnimateInternal()
         {
-            _animation = DOTween.Sequence();
-            _animation
+            var animationInternal = DOTween.Sequence();
+            animationInternal
                 .Append(_view.Rect.DORotate(startValue, duration))
                 .Append(_view.Rect.DORotate(endValue, duration))
                 .SetLoops(-1);
 
-            return _animation;
+            return animationInternal;
         }
 
-        public override void Kill()
-        {
-            _animation.Kill();
-        }
+  
 
         protected override void OnStartAnimation()
         {

@@ -5,10 +5,10 @@ namespace ScarFramework.UI.ViewAnimators
 {
     public abstract class UIAnimator : MonoBehaviour
     {
-        [SerializeField] protected bool isShow = true;
         [SerializeField] protected float duration;
         [SerializeField] protected Ease ease = Ease.OutQuad;
-        protected Sequence _animation;
+        
+        private Sequence _animation;
         protected UIView _view;
 
         public void Init(UIView view)
@@ -20,14 +20,18 @@ namespace ScarFramework.UI.ViewAnimators
         public Tween PlayAnimation()
         {
             OnStartAnimation();
-            var viewAnimation  = AnimateInternal();
-            viewAnimation.OnComplete(OnEndAnimation);
-            return viewAnimation;
+            //var viewAnimation  = AnimateInternal();
+            _animation  = DOTween.Sequence();
+            _animation.Append(AnimateInternal().OnKill(OnEndAnimation));
+            return _animation;
         }
 
         protected abstract Tween AnimateInternal();
 
-        public abstract void Kill();
+        public void Kill()
+        {
+            _animation?.Kill();
+        }
 
         protected abstract void OnStartAnimation();
         protected abstract void OnEndAnimation();

@@ -22,23 +22,18 @@ namespace ScarFramework.UI.ViewAnimators
         {
             if (animators != null)
             {
-                _animation = DOTween.Sequence(AutoPlay.AutoPlayTweeners);
+                var animationInternal = DOTween.Sequence(AutoPlay.AutoPlayTweeners);
 
                 foreach (var animator in animators)
                 {
-                    _animation.Append(animator.PlayAnimation());
+                    animationInternal.Append(animator.PlayAnimation());
                 }
 
-                _animation.Play();
-                return _animation;
+                animationInternal.Play();
+                return animationInternal;
             }
 
             return null;
-        }
-
-        public override void Kill()
-        {
-            _animation.Kill();
         }
 
         protected override void OnStartAnimation()

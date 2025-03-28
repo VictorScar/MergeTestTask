@@ -8,37 +8,25 @@ namespace ScarFramework.UI.ViewAnimators
     {
         [SerializeField] protected float startValue = 1;
         [SerializeField] protected float endValue = 1;
-        
+
         protected override Tween AnimateInternal()
         {
-            _animation = DOTween.Sequence();
-            _animation
+            var internalAnimation = DOTween.Sequence();
+            internalAnimation
                 .Append(_view.CG.DOFade(endValue, duration).SetEase(ease));
-            return _animation;
+            return internalAnimation;
         }
-
-        public override void Kill()
-        {
-            _animation.Kill();
-        }
+  
 
         protected override void OnStartAnimation()
         {
             _view.CG.alpha = startValue;
-            
-            if (isShow)
-            {
-                _view.gameObject.SetActive(isShow);
-            }
-           
         }
 
         protected override void OnEndAnimation()
         {
+            Debug.Log("Animation ended!");
             _view.CG.alpha = endValue;
-
-            Debug.Log("Animation complete!");
-            _view.gameObject.SetActive(endValue > 0);
         }
     }
 }

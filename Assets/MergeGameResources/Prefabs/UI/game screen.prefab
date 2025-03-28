@@ -689,7 +689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8699422193407799573
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1167,6 +1167,8 @@ GameObject:
   - component: {fileID: 2948240420244562865}
   - component: {fileID: 1489336493512064450}
   - component: {fileID: 7270446918147964684}
+  - component: {fileID: 4398258132578965323}
+  - component: {fileID: 4179682254262074840}
   m_Layer: 0
   m_Name: upload cell
   m_TagString: Untagged
@@ -1232,6 +1234,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &4398258132578965323
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470641654261954612}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &4179682254262074840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470641654261954612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471dda6079f2b9e4e9be73c6f3d6adfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect: {fileID: 6727576237605627060}
+  cg: {fileID: 4398258132578965323}
+  showInAnimator: {fileID: 0}
+  hideInAnimator: {fileID: 0}
+  onClickDownAnimator: {fileID: 0}
+  onClickUpAnimator: {fileID: 0}
 --- !u!1 &9207801873759983948
 GameObject:
   m_ObjectHideFlags: 0
