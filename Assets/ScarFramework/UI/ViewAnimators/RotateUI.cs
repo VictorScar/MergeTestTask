@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ScarFramework.UI.ViewAnimators
 {
+    [CreateAssetMenu(menuName = "UI/Animators/Rotate", fileName = "RotateUI")]
     public class RotateUI : UIAnimator
     {
         [SerializeField] private Vector3 startValue;
@@ -27,6 +28,16 @@ namespace ScarFramework.UI.ViewAnimators
 
         protected override void OnEndAnimation()
         {
+        }
+
+        public override UIAnimator GetInstance()
+        {
+            var instance = ScriptableObject.CreateInstance<RotateUI>();
+            instance.duration = duration;
+            instance.startValue = startValue;
+            instance.endValue = endValue;
+
+            return instance;
         }
     }
 }

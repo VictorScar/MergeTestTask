@@ -4,15 +4,17 @@ using ScarFramework.UI.ViewAnimators;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace MergeGame.UI._ItemView
 {
     public class ItemView : UIView, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler,
-        IBeginDragHandler, IEndDragHandler
+        IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] private Image icon;
-        [SerializeField] private UIAnimator clickAnimator;
+        [SerializeField] private UIAnimator pointerDownAnimator;
+        [SerializeField] private UIAnimator pointerUpAnimator;
 
         public event Action onClick;
         public event Action onStartDrag;
@@ -20,7 +22,10 @@ namespace MergeGame.UI._ItemView
 
         protected override void OnInit()
         {
-            clickAnimator?.Init(this);
+            pointerDownAnimator = pointerDownAnimator.GetInstance();
+            pointerDownAnimator?.Init(this);
+            pointerUpAnimator = pointerUpAnimator.GetInstance();
+            pointerUpAnimator?.Init(this);
         }
 
         public ItemViewData Data
@@ -47,7 +52,6 @@ namespace MergeGame.UI._ItemView
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            clickAnimator?.PlayAnimation();
             onClick?.Invoke();
         }
 
@@ -65,6 +69,16 @@ namespace MergeGame.UI._ItemView
         {
             icon.gameObject.SetActive(true);
             onEndDrag?.Invoke();
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            pointerDownAnimator?.PlayAnimation();
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            pointerUpAnimator?.PlayAnimation();
         }
     }
 

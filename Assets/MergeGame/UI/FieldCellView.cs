@@ -19,7 +19,7 @@ namespace MergeGame.UI
 
         public ItemView Item => itemView;
 
-        public void Init()
+        protected override void OnInit()
         {
             itemView.Init();
             

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ScarFramework.UI.ViewAnimators
 {
-    public abstract class UIAnimator : MonoBehaviour
+    public abstract class UIAnimator : ScriptableObject
     {
         [SerializeField] protected float duration;
         [SerializeField] protected Ease ease = Ease.OutQuad;
@@ -20,8 +20,7 @@ namespace ScarFramework.UI.ViewAnimators
         public Tween PlayAnimation()
         {
             OnStartAnimation();
-            //var viewAnimation  = AnimateInternal();
-            _animation  = DOTween.Sequence();
+           _animation  = DOTween.Sequence();
             _animation.Append(AnimateInternal().OnKill(OnEndAnimation));
             return _animation;
         }
@@ -40,6 +39,8 @@ namespace ScarFramework.UI.ViewAnimators
         {
            
         }
+
+        public abstract UIAnimator GetInstance();
 
     }
 }

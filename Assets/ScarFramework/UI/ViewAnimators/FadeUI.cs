@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace ScarFramework.UI.ViewAnimators
 {
+    [CreateAssetMenu(menuName = "UI/Animators/Fade", fileName = "FadeUI")]
     public class FadeUI : UIAnimator
     {
         [SerializeField] protected float startValue = 1;
@@ -27,6 +28,16 @@ namespace ScarFramework.UI.ViewAnimators
         {
             Debug.Log("Animation ended!");
             _view.CG.alpha = endValue;
+        }
+
+        public override UIAnimator GetInstance()
+        {
+            var instance = ScriptableObject.CreateInstance<FadeUI>();
+            instance.duration = duration;
+            instance.startValue = startValue;
+            instance.endValue = endValue;
+
+            return instance;
         }
     }
 }
