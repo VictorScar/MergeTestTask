@@ -1,3 +1,4 @@
+using MergeGame._ProfileData;
 using MergeGame.Gameplay._Craft;
 using UnityEngine;
 
@@ -11,8 +12,10 @@ namespace MergeGame.Core
         [SerializeField] private int craftFieldHeight = 10;
         [SerializeField] private FieldData[] fieldDatas;
         [SerializeField] private int gameSceneIndex = 1;
+        [SerializeField] private ResourcesConfig resourcesConfig;
 
         public CraftableItemConfig ItemsConfig => itemsConfig;
+        public ResourcesConfig ResourcesConfig => resourcesConfig;
         public int FieldWidth => craftFieldWidth;
         public int FieldHeight => craftFieldHeight;
         public FieldData[] FieldDatas => fieldDatas;

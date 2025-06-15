@@ -34,4 +34,9 @@ namespace MergeGame.Controllers
             return null;
         }
     }
+
+    public struct GameplayControllerData
+    {
+        public GameConfig Config;
+    }
 }
