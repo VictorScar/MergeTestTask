@@ -58,11 +58,13 @@ namespace MergeGame.Controllers.Handlers
 
         private void OnStartStartDragging()
         {
+            _cellView.Item.IconIsVisible = false;
             _dragController.StartDrag(this);
         }
 
         private void OnEndDragging()
         {
+            _cellView.Item.IconIsVisible = true;
             _dragController.EndDrag(this);
         }
 

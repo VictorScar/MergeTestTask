@@ -1,10 +1,8 @@
 using System;
 using ScarFramework.UI;
 using ScarFramework.UI.ViewAnimators;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace MergeGame.UI._ItemView
@@ -22,9 +20,7 @@ namespace MergeGame.UI._ItemView
 
         protected override void OnInit()
         {
-            //pointerDownAnimator = pointerDownAnimator.GetInstance();
             pointerDownAnimator?.Init(this);
-            //pointerUpAnimator = pointerUpAnimator.GetInstance();
             pointerUpAnimator?.Init(this);
         }
 
@@ -34,7 +30,13 @@ namespace MergeGame.UI._ItemView
             {
                 icon.sprite = value.Icon;
                 gameObject.SetActive(icon.sprite != null);
+                //IconIsVisible = icon.sprite != null;
             }
+        }
+
+        public bool IconIsVisible
+        {
+            set => icon.gameObject.SetActive(value);
         }
 
         public Sprite Icon
@@ -61,13 +63,13 @@ namespace MergeGame.UI._ItemView
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            icon.gameObject.SetActive(false);
+            //icon.gameObject.SetActive(false);
             onStartDrag?.Invoke();
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            icon.gameObject.SetActive(true);
+            //icon.gameObject.SetActive(true);
             onEndDrag?.Invoke();
         }
 

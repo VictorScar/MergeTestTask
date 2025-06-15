@@ -9,7 +9,6 @@ namespace MergeGame.UI
 {
     public class FieldCellView : UIView
     {
-        //[SerializeField] private RectTransform content;
         [SerializeField] private Image highlight;
         [SerializeField]private ItemView itemView;
         

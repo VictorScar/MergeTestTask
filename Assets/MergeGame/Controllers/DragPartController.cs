@@ -46,7 +46,8 @@ namespace MergeGame.Controllers
             {
                 if (result.gameObject.TryGetComponent<FieldCellView>(out var targetCell))
                 {
-                    TryPutElement(cellHandler, targetCell);
+                    var targetCellHandler = _fieldController.GetItemHandler(targetCell);
+                    TryPutElement(cellHandler, targetCellHandler);
                     break;
                 }
             }
@@ -59,10 +60,8 @@ namespace MergeGame.Controllers
             }
         }
 
-        private void TryPutElement(CellHandler fromCellHandler, FieldCellView targetCellView)
+        private void TryPutElement(CellHandler fromCellHandler, CellHandler targetCellHandler)
         {
-            var targetCellHandler = _fieldController.GetItemHandler(targetCellView);
-
             if (fromCellHandler == targetCellHandler)
             {
                 return;

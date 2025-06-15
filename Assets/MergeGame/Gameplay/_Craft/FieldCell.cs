@@ -37,8 +37,6 @@ namespace MergeGame.Gameplay._Craft
 
         public bool HasElement => FieldElement != null;
        
-
-
         public void Clear()
         {
             FieldElement = null;
