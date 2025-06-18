@@ -30,42 +30,7 @@ namespace MergeGame.Gameplay
 
             return null;
         }
-
-        /*public bool AddToEmptyCell(FieldElement fieldElement)
-        {
-            if (_rows != null)
-            {
-                for (int i = 0; i < _rows.Count(); i++)
-                {
-                    for (int j = 0; j < _rows[i].Elements.Count; j++)
-                    {
-                        if(ValidateCell(i, j))
-                        {
-                            var cell = _cells(i, j);
-
-                            if (!cell.HasElement)
-                            {
-                                cell.FieldElement = fieldElement;
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }*/
-
-        /*public bool AddElementToNearestEmptyCell(int rowIndex, int cellIndex, FieldElement fieldElement)
-        {
-            if (FindNearestEmptyCell(rowIndex, cellIndex, out var nearestCell))
-            {
-                return AddElementToCell(nearestCell, fieldElement);
-            }
-
-            return false;
-        }*/
-
+  
         public bool AddElementToCell(int rowIndex, int cellIndex, FieldElement fieldElement)
         {
             if (TryGetCell(rowIndex, cellIndex, out var cell))

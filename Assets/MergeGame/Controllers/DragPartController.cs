@@ -47,7 +47,8 @@ namespace MergeGame.Controllers
                 if (result.gameObject.TryGetComponent<FieldCellView>(out var targetCell))
                 {
                     var targetCellHandler = _fieldController.GetItemHandler(targetCell);
-                    TryPutElement(cellHandler, targetCellHandler);
+                    targetCellHandler.PutElement(cellHandler);
+                 
                     break;
                 }
             }
@@ -59,42 +60,6 @@ namespace MergeGame.Controllers
                 StopCoroutine(_dragging);
             }
         }
-
-        private void TryPutElement(CellHandler fromCellHandler, CellHandler targetCellHandler)
-        {
-            if (fromCellHandler == targetCellHandler)
-            {
-                return;
-            }
-
-            var fromCellItem = fromCellHandler.Cell.FieldElement;
-            var targetCellItem = targetCellHandler.Cell.FieldElement;
-
-            if (targetCellItem != null)
-            {
-                if (targetCellItem.Data.IsCanMerge && targetCellItem.Data == fromCellItem.Data &&
-                    !_config.IsMaxItemLevel(targetCellItem.Data))
-                {
-                    fromCellHandler.Cell.Clear();
-                    targetCellHandler.Cell.FieldElement = new FieldElement(new FieldElementData
-                    {
-                        GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1,
-                        IsCanMerge = fromCellItem.Data.IsCanMerge
-                    });
-                }
-                else
-                {
-                    fromCellHandler.Cell.FieldElement = targetCellItem;
-                    targetCellHandler.Cell.FieldElement = fromCellItem;
-                }
-            }
-            else
-            {
-                targetCellHandler.Cell.FieldElement = fromCellHandler.Cell.FieldElement;
-                fromCellHandler.Cell.Clear();
-            }
-        }
-
 
         private IEnumerator Dragging()
         {

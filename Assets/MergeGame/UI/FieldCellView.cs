@@ -34,12 +34,12 @@ namespace MergeGame.UI
             itemView.onEndDrag -= OnEndDrag;
         }
 
-        public void AddItem(Sprite itemIcon)
+        public void SetIcon(Sprite itemIcon)
         {
             itemView.Data = new ItemViewData { Icon = itemIcon };
         }
 
-        public void RemoveItem()
+        public void RemoveIcon()
         {
             itemView.Data = new ItemViewData { Icon = null };
         }

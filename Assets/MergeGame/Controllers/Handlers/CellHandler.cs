@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MergeGame.Controllers.Handlers
 {
-    public class CellHandler
+    public class CellHandler : InteractiveElementHandler
     {
         private FieldCell _cell;
         private FieldCellView _cellView;
@@ -16,6 +16,32 @@ namespace MergeGame.Controllers.Handlers
         public FieldCell Cell => _cell;
         public FieldCellView View => _cellView;
         private CraftableItemConfig _config;
+
+        public ItemGroupID GroupID
+        {
+            get
+            {
+                if (_cell != null && _cell.FieldElement != null)
+                {
+                    return _cell.FieldElement.Data.GroupID;
+                }
+
+                return ItemGroupID.None;
+            }
+        }
+
+        public int ElementLevel
+        {
+            get
+            {
+                if (_cell != null && _cell.FieldElement != null)
+                {
+                    return _cell.FieldElement.Data.Level;
+                }
+
+                return -1;
+            }
+        }
 
         public CellHandler(FieldCell cell, FieldCellView cellView, CraftableItemConfig config,
             DragPartController dragController, CreateFieldElementsController createElementController)
@@ -41,19 +67,19 @@ namespace MergeGame.Controllers.Handlers
             _cell.onItemAdded -= OnItemAdded;
             _cell.onItemRemoved -= OnItemRemoved;
         }
- 
+
 
         private void OnItemAdded(FieldElement item)
         {
             if (_config.GetItemInfo(item.Data, out var itemData))
             {
-                _cellView.AddItem(itemData.Icon);
+                _cellView.SetIcon(itemData.Icon);
             }
         }
 
         private void OnItemRemoved()
         {
-            _cellView.AddItem(null);
+            _cellView.SetIcon(null);
         }
 
         private void OnStartStartDragging()
@@ -75,6 +101,50 @@ namespace MergeGame.Controllers.Handlers
                 var newItemData = partGenerator.GeneratePartData;
                 _createElementController.AddCraftPartNearCell(newItemData.GroupID, newItemData.Level, _cell.Address);
             }
+        }
+
+        public override void Select()
+        {
+        }
+
+        public override void PutElement(CellHandler sourceHandler)
+        {
+            if (sourceHandler == this)
+            {
+                return;
+            }
+
+            var fromCellItem = sourceHandler.Cell.FieldElement;
+            var targetCellItem = Cell.FieldElement;
+
+            if (targetCellItem != null)
+            {
+                if (targetCellItem.Data.IsCanMerge && targetCellItem.Data == fromCellItem.Data &&
+                    !_config.IsMaxItemLevel(targetCellItem.Data))
+                {
+                    sourceHandler.RemoveElement();
+                    Cell.FieldElement = new FieldElement(new FieldElementData
+                    {
+                        GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1,
+                        IsCanMerge = fromCellItem.Data.IsCanMerge
+                    });
+                }
+                else
+                {
+                    sourceHandler.Cell.FieldElement = targetCellItem;
+                    Cell.FieldElement = fromCellItem;
+                }
+            }
+            else
+            {
+                Cell.FieldElement = sourceHandler.Cell.FieldElement;
+                sourceHandler.RemoveElement();
+            }
+        }
+
+        private void RemoveElement()
+        {
+            _cell.Clear();
         }
     }
 }
