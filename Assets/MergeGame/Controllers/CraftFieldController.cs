@@ -24,7 +24,7 @@ namespace MergeGame.Controllers
         private DragView _dragView;
         private GameConfig _config;
 
-        private List<CellHandler> _cellHandlers = new List<CellHandler>();
+       // private List<InteractiveElementHandler> _interactiveElementHandlers = new List<InteractiveElementHandler>();
 
         public override void Init(GameConfig config)
         {
@@ -75,15 +75,13 @@ namespace MergeGame.Controllers
 
         private void AddCell(int rowIndex, int cellIndex)
         {
-            var cell = _field.AddCell(rowIndex, cellIndex);
+            var cell = new FieldCell(rowIndex, cellIndex);
 
-            if (cell != null)
-            {
-                var cellView = _fieldView.AddCellView(rowIndex, cellIndex);
-                var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController,
-                    createElementsController);
-                _cellHandlers.Add(handler);
-            }
+            var cellView = _fieldView.AddCellView(rowIndex, cellIndex);
+            var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController,
+                createElementsController);
+           // _interactiveElementHandlers.Add(handler);
+           _field.Elements.Add(handler);
         }
 
         [Button("Spawn Item")]
@@ -104,9 +102,9 @@ namespace MergeGame.Controllers
             createElementsController.AddProduceElement(generatorID);
         }
 
-        public CellHandler GetItemHandler(FieldCellView cellView)
+        public InteractiveElementHandler GetItemHandler(FieldCellView view)
         {
-            var handler = _cellHandlers.FirstOrDefault((h) => h.View == cellView);
+            var handler = _field.Elements.FirstOrDefault((h) => h.View == view);
             return handler;
         }
     }

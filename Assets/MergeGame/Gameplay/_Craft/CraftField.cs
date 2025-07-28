@@ -1,25 +1,25 @@
 using System;
+using System.Collections.Generic;
 using MergeGame.Controllers;
+using MergeGame.Controllers.Handlers;
 using MergeGame.Gameplay._Craft;
 
 namespace MergeGame.Gameplay
 {
     public class CraftField
     {
-        // private List<FieldElementsRow> _rows = new List<FieldElementsRow>();
-
         private FieldCell[,] _cells;
-
+        private List<InteractiveElementHandler> _elements = new List<InteractiveElementHandler>(); 
         public int FieldHight => _cells.GetLength(0);
         public int FieldWidth => _cells.GetLength(1);
-
+        public List<InteractiveElementHandler> Elements => _elements;
 
         public CraftField(CreateFieldData data)
         {
             _cells = new FieldCell[data.FieldHeight, data.FieldWidth];
         }
 
-        public FieldCell AddCell(int rowIndex, int cellIndex)
+        /*public FieldCell AddCell(int rowIndex, int cellIndex)
         {
             if (ValidateCell(rowIndex, cellIndex))
             {
@@ -29,7 +29,7 @@ namespace MergeGame.Gameplay
             }
 
             return null;
-        }
+        }*/
   
         public bool AddElementToCell(int rowIndex, int cellIndex, FieldElement fieldElement)
         {
@@ -55,39 +55,6 @@ namespace MergeGame.Gameplay
             return false;
         }
 
-        /*public bool FindNearestEmptyCell(int rowIndex, int cellIndex, out FieldCell nearestEmptyCell)
-        {
-            var targetPosition = new Vector2Int(rowIndex, cellIndex);
-            nearestEmptyCell = null;
-            var nearestSqrDistance = 100f;
-            var isFound = false;
-
-            for (int i = 0; i < _rows.Count; i++)
-            {
-                for (int j = 0; j < _rows[i].Elements.Count(); j++)
-                {
-                    if (TryGetCell(i, j, out var cell))
-                    {
-                        if (!cell.HasElement)
-                        {
-                            var newIndex = new Vector2Int(i, j);
-
-                            var currentSqrDistance = Mathf.Abs((targetPosition - newIndex).sqrMagnitude);
-
-                            if (currentSqrDistance < nearestSqrDistance)
-                            {
-                                nearestSqrDistance = currentSqrDistance;
-                                nearestEmptyCell = cell;
-                                isFound = true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return isFound;
-        }*/
-
         public bool TryGetCell(int rowIndex, int cellIndex, out FieldCell cell)
         {
             if (ValidateCell(rowIndex, cellIndex))
@@ -108,25 +75,19 @@ namespace MergeGame.Gameplay
 
         public void Clear()
         {
-            foreach (var cell in _cells)
+            /*foreach (var cell in _cells)
             {
                 cell.Clear();
+            }*/
+            foreach (var element in _elements)
+            {
+                if (element is CellHandler cellHandler)
+                {
+                    cellHandler.RemoveElement();
+                }
             }
         }
-
-        /*public bool AddItemIntoRandomCell(FieldElement element)
-        {
-            var rowIndex = Random.Range(0, _rows.Count);
-            var cellIndex = Random.Range(0, _rows[rowIndex].Elements.Count);
-
-            return AddElementToNearestEmptyCell(rowIndex, cellIndex, element);
-        }*/
     }
-
-    /*public class FieldElementsRow
-    {
-        public List<FieldCell> Elements = new List<FieldCell>();
-    }*/
 
     [Serializable]
     public struct FieldElementData

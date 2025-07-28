@@ -13,8 +13,15 @@ namespace MergeGame.Controllers.Handlers
         private DragPartController _dragController;
         private CreateFieldElementsController _createElementController;
 
-        public FieldCell Cell => _cell;
-        public FieldCellView View => _cellView;
+        //public FieldCell Cell => _cell;
+        public FieldElement Element
+        {
+            get => _cell.FieldElement;
+            set => _cell.FieldElement = value;
+        }
+
+        public override FieldCellView View => _cellView;
+        public override Vector2 ID { get; }
         private CraftableItemConfig _config;
 
         public ItemGroupID GroupID
@@ -68,7 +75,46 @@ namespace MergeGame.Controllers.Handlers
             _cell.onItemRemoved -= OnItemRemoved;
         }
 
+        public override void PutElement(CellHandler sourceHandler)
+        {
+            if (sourceHandler == this)
+            {
+                return;
+            }
 
+            var fromCellItem = sourceHandler.Element;
+            var targetCellItem = Element;
+
+            if (targetCellItem != null)
+            {
+                if (targetCellItem.Data.IsCanMerge && targetCellItem.Data == fromCellItem.Data &&
+                    !_config.IsMaxItemLevel(targetCellItem.Data))
+                {
+                    sourceHandler.RemoveElement();
+                    Element = new FieldElement(new FieldElementData
+                    {
+                        GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1,
+                        IsCanMerge = fromCellItem.Data.IsCanMerge
+                    });
+                }
+                else
+                {
+                    sourceHandler.Element = targetCellItem;
+                    Element = fromCellItem;
+                }
+            }
+            else
+            {
+                Element = sourceHandler.Element;
+                sourceHandler.RemoveElement();
+            }
+        }
+
+        public void RemoveElement()
+        {
+            _cell.Clear();
+        }
+        
         private void OnItemAdded(FieldElement item)
         {
             if (_config.GetItemInfo(item.Data, out var itemData))
@@ -107,44 +153,6 @@ namespace MergeGame.Controllers.Handlers
         {
         }
 
-        public override void PutElement(CellHandler sourceHandler)
-        {
-            if (sourceHandler == this)
-            {
-                return;
-            }
-
-            var fromCellItem = sourceHandler.Cell.FieldElement;
-            var targetCellItem = Cell.FieldElement;
-
-            if (targetCellItem != null)
-            {
-                if (targetCellItem.Data.IsCanMerge && targetCellItem.Data == fromCellItem.Data &&
-                    !_config.IsMaxItemLevel(targetCellItem.Data))
-                {
-                    sourceHandler.RemoveElement();
-                    Cell.FieldElement = new FieldElement(new FieldElementData
-                    {
-                        GroupID = fromCellItem.Data.GroupID, Level = fromCellItem.Data.Level + 1,
-                        IsCanMerge = fromCellItem.Data.IsCanMerge
-                    });
-                }
-                else
-                {
-                    sourceHandler.Cell.FieldElement = targetCellItem;
-                    Cell.FieldElement = fromCellItem;
-                }
-            }
-            else
-            {
-                Cell.FieldElement = sourceHandler.Cell.FieldElement;
-                sourceHandler.RemoveElement();
-            }
-        }
-
-        private void RemoveElement()
-        {
-            _cell.Clear();
-        }
+   
     }
 }
