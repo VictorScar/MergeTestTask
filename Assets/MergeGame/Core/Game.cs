@@ -1,19 +1,29 @@
-using UnityEngine;
-using UnityEngine.Serialization;
+using System.Threading;
+using MergeGame._Scenarios;
 
 namespace MergeGame.Core
 {
-    public class Game : MonoBehaviour
+    public class Game
     {
-        [SerializeField] private GameConfig config;
-        [SerializeField] private GameServiceLocator serviceLocator;
-      
-        public void Init()
+        private GameConfig _config;
+        private CancellationTokenSource _gameCancellation;
+       
+        public Game(GameConfig config)
         {
-            DontDestroyOnLoad(gameObject);
-            serviceLocator.Init(config);
+            _config = config;
+            _gameCancellation = new CancellationTokenSource();
             
-            serviceLocator.ScenariosContainer.GetScenario<GameLevelScenario>().Run();
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            var gameLevelScenario = GameServiceLocator.I.ScenariosContainer.GetScenario<GameLevelScenario>();
+
+            if (gameLevelScenario)
+            {
+                gameLevelScenario.Run(_gameCancellation.Token);
+            }
         }
     }
 }

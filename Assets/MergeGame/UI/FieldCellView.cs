@@ -2,14 +2,12 @@ using System;
 using MergeGame.UI._ItemView;
 using ScarFramework.UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace MergeGame.UI
 {
     public class FieldCellView : UIView
     {
-        //[SerializeField] private RectTransform content;
         [SerializeField] private Image highlight;
         [SerializeField]private ItemView itemView;
         

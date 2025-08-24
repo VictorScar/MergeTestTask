@@ -5,33 +5,8 @@ namespace MergeGame.Controllers
 {
     public class GameplayControllersProvider : MonoBehaviour
     {
-        [SerializeField] private GameplayControllerBase[] controllers;
+        [SerializeField] private CraftFieldController craftFieldController;
 
-        public void Init(GameConfig config)
-        {
-            if (controllers != null)
-            {
-                foreach (var controller in controllers)
-                {
-                    controller.Init(config);
-                }
-            }
-        }
-        
-        public T GetController<T>() where T : GameplayControllerBase
-        {
-            if (controllers != null)
-            {
-                foreach (var controller in controllers)
-                {
-                    if (controller is T typedController)
-                    {
-                        return typedController;
-                    }
-                }
-            }
-
-            return null;
-        }
+        public CraftFieldController CraftFieldController => craftFieldController;
     }
 }

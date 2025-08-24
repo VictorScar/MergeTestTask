@@ -43,19 +43,17 @@ namespace MergeGame.Controllers
         public void StartDrag(CellHandler cellHandler)
         {
             _dragView.SetItemView(cellHandler.View.Item);
-            //_dragging = StartCoroutine(Dragging());
-            _isDragging = true;
+           _isDragging = true;
         }
 
         public void EndDrag(CellHandler cellHandler)
         {
-            var raycastResults = new List<RaycastResult>();
+            var rayCastResults = new List<RaycastResult>();
             var pointerEventData = new PointerEventData(_eventSystem);
             pointerEventData.position = Input.mousePosition;
+            _graphicRaycaster.Raycast(pointerEventData, rayCastResults);
 
-            _graphicRaycaster.Raycast(pointerEventData, raycastResults);
-
-            foreach (var result in raycastResults)
+            foreach (var result in rayCastResults)
             {
                 if (result.gameObject.TryGetComponent<FieldCellView>(out var targetCell))
                 {
@@ -65,12 +63,7 @@ namespace MergeGame.Controllers
             }
 
             _dragView.SetItemView(null);
-
-            /*if (_dragging != null)
-            {
-                StopCoroutine(_dragging);
-            }*/
-            
+          
             _isDragging = false;
         }
 
@@ -110,15 +103,5 @@ namespace MergeGame.Controllers
                 fromCellHandler.Cell.Clear();
             }
         }
-
-
-        /*private IEnumerator Dragging()
-        {
-            while (true)
-            {
-                _dragView.Rect.position = Input.mousePosition;
-                yield return null;
-            }
-        }*/
     }
 }
