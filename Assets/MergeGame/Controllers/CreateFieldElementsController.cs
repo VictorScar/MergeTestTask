@@ -24,7 +24,7 @@ namespace MergeGame.Controllers
 
                 if (GetRandomEmptyCellAddress(out var address))
                 {
-                    AddElementToEmtyCell(newItemGenerator, address);
+                    AddElementToEmptyCell(newItemGenerator, address);
                 }
             }
         }
@@ -34,11 +34,11 @@ namespace MergeGame.Controllers
             if (_config.GetItemInfo(groupID, itemlevel, out var itemData))
             {
                 var elementData = new FieldElementData(itemData.GroupID, itemData.Level, itemData.IsCanMerge);
-                AddElementToEmtyCell(new CraftPart(elementData), cellAdress);
+                AddElementToEmptyCell(new CraftPart(elementData), cellAdress);
             }
         }
 
-        private void AddElementToEmtyCell(FieldElement fieldElement, Vector2Int cellAdress)
+        private void AddElementToEmptyCell(FieldElement fieldElement, Vector2Int cellAdress)
         {
             _field.AddElementToCell(cellAdress.x, cellAdress.y, fieldElement);
         }
