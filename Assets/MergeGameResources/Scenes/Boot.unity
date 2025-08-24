@@ -243,7 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad434ebd1ac10147be5f292d6c4116a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePrefab: {fileID: 2409107343127115945, guid: ef5d1bbd84da64b4cad830470e58eefe, type: 3}
+  config: {fileID: 11400000, guid: e626341a94e458a4facf050f406ebded, type: 2}
+  gameServiceLocator: {fileID: 6375885490496956926, guid: d4359ae525a2cb141a4f2b19683ff01e, type: 3}
 --- !u!4 &732597330
 Transform:
   m_ObjectHideFlags: 0

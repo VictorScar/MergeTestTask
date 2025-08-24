@@ -4,13 +4,18 @@ namespace MergeGame.Core
 {
     public class Boot : MonoBehaviour
     {
-        [SerializeField] private Game gamePrefab;
+        [SerializeField] private GameConfig config;
+        [SerializeField] private GameServiceLocator gameServiceLocator;
+        
+        private GameServiceLocator _serviceLocator;
         private Game _game;
 
         private void Start()
         {
-            _game = Instantiate(gamePrefab);
-            _game.Init();
+            _serviceLocator = Instantiate(gameServiceLocator);
+            _serviceLocator.Init(config);
+
+            _game = new Game(config);
         }
     }
 }

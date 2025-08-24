@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using MergeGame.Controllers.Handlers;
 using MergeGame.Gameplay;
@@ -18,6 +17,18 @@ namespace MergeGame.Controllers
         private GraphicRaycaster _graphicRaycaster;
         private EventSystem _eventSystem;
         private CraftFieldController _fieldController;
+        private bool _isDragging;
+
+        private void Update()
+        {
+            if (_isDragging)
+            {
+                if (_dragView)
+                {
+                    _dragView.Rect.position = Input.mousePosition;
+                }
+            }
+        }
 
         public void Init(DragView dragView, CraftableItemConfig config, Canvas canvas,
             CraftFieldController fieldController)
@@ -26,23 +37,23 @@ namespace MergeGame.Controllers
             _config = config;
             _fieldController = fieldController;
             _graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
+            _isDragging = false;
         }
 
         public void StartDrag(CellHandler cellHandler)
         {
             _dragView.SetItemView(cellHandler.View.Item);
-            _dragging = StartCoroutine(Dragging());
+           _isDragging = true;
         }
 
         public void EndDrag(CellHandler cellHandler)
         {
-            var raycastResults = new List<RaycastResult>();
+            var rayCastResults = new List<RaycastResult>();
             var pointerEventData = new PointerEventData(_eventSystem);
             pointerEventData.position = Input.mousePosition;
+            _graphicRaycaster.Raycast(pointerEventData, rayCastResults);
 
-            _graphicRaycaster.Raycast(pointerEventData, raycastResults);
-
-            foreach (var result in raycastResults)
+            foreach (var result in rayCastResults)
             {
                 if (result.gameObject.TryGetComponent<FieldCellView>(out var targetCell))
                 {
@@ -52,11 +63,8 @@ namespace MergeGame.Controllers
             }
 
             _dragView.SetItemView(null);
-
-            if (_dragging != null)
-            {
-                StopCoroutine(_dragging);
-            }
+          
+            _isDragging = false;
         }
 
         private void TryPutElement(CellHandler fromCellHandler, FieldCellView targetCellView)
@@ -93,16 +101,6 @@ namespace MergeGame.Controllers
             {
                 targetCellHandler.Cell.FieldElement = fromCellHandler.Cell.FieldElement;
                 fromCellHandler.Cell.Clear();
-            }
-        }
-
-
-        private IEnumerator Dragging()
-        {
-            while (true)
-            {
-                _dragView.Rect.position = Input.mousePosition;
-                yield return null;
             }
         }
     }

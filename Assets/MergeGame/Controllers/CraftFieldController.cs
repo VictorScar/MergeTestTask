@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MergeGame.Controllers.Handlers;
@@ -25,6 +26,11 @@ namespace MergeGame.Controllers
         private GameConfig _config;
 
         private List<CellHandler> _cellHandlers = new List<CellHandler>();
+
+        private void OnDestroy()
+        {
+            ClearHandlers();
+        }
 
         public override void Init(GameConfig config)
         {
@@ -83,6 +89,19 @@ namespace MergeGame.Controllers
                 var handler = new CellHandler(cell, cellView, _config.ItemsConfig, dragPartController,
                     createElementsController);
                 _cellHandlers.Add(handler);
+            }
+        }
+
+        private void ClearHandlers()
+        {
+            if (_cellHandlers != null)
+            {
+                foreach (var handler in _cellHandlers)
+                {
+                    handler.Dispose();
+                }
+                
+                _cellHandlers.Clear();
             }
         }
 

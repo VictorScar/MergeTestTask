@@ -1,3 +1,4 @@
+using System.Threading;
 using MergeGame.Core;
 using UnityEngine;
 
@@ -7,11 +8,11 @@ namespace MergeGame._Scenarios
     {
         public abstract void Init(GameConfig config);
     
-        public void Run()
+        public void Run(CancellationToken gameCancellationToken)
         {
-            RunInternal();
+            RunInternal(gameCancellationToken);
         }
 
-        protected abstract void RunInternal();
+        protected abstract void RunInternal(CancellationToken gameCancellationToken);
     }
 }

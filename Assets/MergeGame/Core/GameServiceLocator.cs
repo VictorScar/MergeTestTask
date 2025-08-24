@@ -11,7 +11,7 @@ namespace MergeGame.Core
         [SerializeField] private SceneController sceneController;
         [SerializeField] private GameplayControllersProvider gameplayControllersProvider;
         [SerializeField] private ScenariosContainer scenariosContainer;
-        
+
         public static GameServiceLocator I { get; private set; }
 
         public UISystem UI => uiSystem;
@@ -24,15 +24,15 @@ namespace MergeGame.Core
             if (I == null)
             {
                 I = this;
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
                 Destroy(gameObject);
             }
-        
+
             uiSystem.Init();
             sceneController.Init(config.GameSceneIndex);
-            gameplayControllersProvider.Init(config);
             scenariosContainer.Init(config);
         }
     }
